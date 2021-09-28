@@ -19,94 +19,221 @@
     <div id="jsGrid"></div>
 
     <script>
-        $("#jsGrid").jsGrid({
-            width: "100%",
-            height: "500px",
-            editing: true,
-            sorting: true,
-            paging: true,
-            headerRowRenderer: function () {
-                var result = $("<tr>")
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'))
-                    .append($("<th>").width('100/12%'));
-                    
+        $(function () {
+            $("#jsGrid").jsGrid({
+                width: "100%",
+                sorting: true,
+                headerRowRenderer: function () {
+                    var $result = $("<tr>").height(0)
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"));
 
-                result = result.add($(" <tr> ")
-                    .append($("<th>").attr("colspan", 3).text("1분기").height(40))
-                    .append($("<th>").attr("colspan", 3).text("2분기"))
-                    .append($("<th>").attr("colspan", 3).text("3분기"))
-                    .append($("<th>").attr("colspan", 3).text("4분기"))
-                )
-                var tr = $("<tr>");
-                var grid = this;
+                    $result = $result.add($("<tr>")
+                        .append($("<th class='jsgrid-cell'>").attr("rowspan", 2).text("메이커")
+                            .height(40))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("1분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("2분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("3분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("4분기")));
 
-                grid._eachField(function (field, index) {
-                    var th = $("<th>").text(field.title).width(field.width)
-                        .appendTo(tr);
-                });
-
-                return result.add(tr);
-            },
-            fields: [{
-                type: "text",
-                title: "1월",
-                name: "1"
-            }, {
-                type: "text",
-                title: "2월",
-                name: "2"
-            }, {
-                type: "text",
-                title: "3월",
-                name: "3"
-            }, {
-                type: "text",
-                title: "4월",
-                name: "4"
-            }, {
-                type: "text",
-                title: "5월",
-                name: "5"
-            }, {
-                type: "text",
-                title: "6월",
-                name: "6"
-            }, {
-                type: "text",
-                title: "7월",
-                name: "7"
-            }, {
-                type: "text",
-                title: "8월",
-                name: "8"
-            }, {
-                type: "text",
-                title: "9월",
-                name: "9"
-            }, {
-                type: "text",
-                title: "10월",
-                name: "10"
-            }, {
-                type: "text",
-                title: "11월",
-                name: "11"
-            }, {
-                type: "text",
-                title: "12월",
-                name: "12"
-            }]
+                    $result = $result.add($("<tr>")
+                        .append($("<th class='jsgrid-cell'>").text("1월"))
+                        .append($("<th class='jsgrid-cell'>").text("2월"))
+                        .append($("<th class='jsgrid-cell'>").text("3월"))
+                        .append($("<th class='jsgrid-cell'>").text("4월"))
+                        .append($("<th class='jsgrid-cell'>").text("5월"))
+                        .append($("<th class='jsgrid-cell'>").text("6월"))
+                        .append($("<th class='jsgrid-cell'>").text("7월"))
+                        .append($("<th class='jsgrid-cell'>").text("8월"))
+                        .append($("<th class='jsgrid-cell'>").text("9월"))
+                        .append($("<th class='jsgrid-cell'>").text("10월"))
+                        .append($("<th class='jsgrid-cell'>").text("11월"))
+                        .append($("<th class='jsgrid-cell'>").text("12월"))
+                    );
+                    return $result;
+                },
+                fields: [{
+                        name: "CarMaker",
+                        type: "text",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M1",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M2",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M3",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M4",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M5",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M6",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M7",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M8",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M9",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M10",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M11",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M12",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                ],
+                data: gridData
+            });
         });
+
+        // $('.jsgrid-insert-row').css({ display: 'none' });
+
+        var gridData = [{
+            "CarMaker": "현대",
+            "M1": 2500,
+            "M2": 3000,
+            "M3": 4000,
+            "M4": 3000,
+            "M5": 3700,
+            "M6": 2800,
+            "M7": 5000,
+            "M8": 7500,
+            "M9": 3400,
+            "M10": 2200,
+            "M11": 1300,
+            "M12": 1000
+        }, {
+            "CarMaker" : "기아",
+            "M1": 2400,
+            "M2": 2500,
+            "M3": 3000,
+            "M4": 2800,
+            "M5": 4000,
+            "M6": 3200,
+            "M7": 4800,
+            "M8": 6100,
+            "M9": 2800,
+            "M10": 2000,
+            "M11": 1400,
+            "M12": 1200
+        }, {
+            "CarMaker": "테슬라",
+            "M1": 2800,
+            "M2": 3000,
+            "M3": 2900,
+            "M4": 3100,
+            "M5": 2500,
+            "M6": 3400,
+            "M7": 5000,
+            "M8": 5500,
+            "M9": 6700,
+            "M10": 7000,
+            "M11": 7700,
+            "M12":6500 
+        }, {
+            "CarMaker": "현대1",
+            "M1": 2500,
+            "M2": 3000,
+            "M3": 4000,
+            "M4": 3000,
+            "M5": 3700,
+            "M6": 2800,
+            "M7": 5000,
+            "M8": 7500,
+            "M9": 3400,
+            "M10": 2200,
+            "M11": 1300,
+            "M12":1000
+        }, {
+            "CarMaker": "기아1",
+            "M1": 2500,
+            "M2": 3000,
+            "M3": 4000,
+            "M4": 3000,
+            "M5": 3700,
+            "M6": 2800,
+            "M7": 5000,
+            "M8": 7500,
+            "M9": 3400,
+            "M10": 2200,
+            "M11": 1300,
+            "M12":1000
+        }, {
+            "CarMaker": "테슬라1",
+            "M1": 2500,
+            "M2": 3000,
+            "M3": 4000,
+            "M4": 3000,
+            "M5": 3700,
+            "M6": 2800,
+            "M7": 5000,
+            "M8": 7500,
+            "M9": 3400,
+            "M10": 2200,
+            "M11": 1300,
+            "M12":1000
+        }, {
+            "CarMaker": "반도체",
+            "M1": 9800,
+            "M2": 9500,
+            "M3": 9750,
+            "M4": 7000,
+            "M5": 6830,
+            "M6": 6000,
+            "M7": 3200,
+            "M8": 3100,
+            "M9": 2840,
+            "M10": 2700,
+            "M11": 2230,
+            "M12":1400
+        } ]
     </script>
 </body>
 

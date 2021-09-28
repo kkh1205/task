@@ -9,10 +9,10 @@
     <title>아날로그 반도체 부족현상</title>
     <!-- 사용할 js 모듈들 -->
     <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./data/Data.js"></script>
     <!-- 트리 -->
     <script src="./node_modules/jstree/src/jstree.js"></script>
     <script src="./node_modules/jstree/src/jstree.checkbox.js"></script>
-    <script src="./data/treeData.js"></script>
 
     <!-- 차트 -->
     <script src="./node_modules/highcharts/highcharts.js"></script>
@@ -20,7 +20,6 @@
     <script src="./node_modules/highcharts/modules/exporting.js"></script>
     <script src="./node_modules/highcharts/modules/export-data.js"></script>
     <script src="./node_modules/highcharts/modules/accessibility.js"></script>
-    <script src="./data/chartData.js"></script>
 
     <!-- 그리드 -->
     <script src="./js/jsgrid.js"></script>
@@ -36,43 +35,114 @@
             width: 65vw;
             right: 0;
         }
+
         #tree {
             border: 1px solid #000;
-            position:absolute;
+            position: absolute;
             width: 20%;
             height: 50vh;
             top: 50px;
         }
-        h3{
+
+        #changeValue {
+            position: absolute;
+            width: 5vw;
+            height: 5vh;
+            left: 15%;
+            top: 8%;
+        }
+
+        #jsGrid {
+            position: absolute;
+            top: 57vh;
+        }
+
+        h3 {
             border: 1px solid #000;
             position: absolute;
-            width:20%;
-        }  
+            width: 20%;
+        }
     </style>
 </head>
 
 <body>
 
     <h3>자동차 브랜드 분류</h3>
-    <div id=tree>
+    <div id=tree></div>
+    <input type="button" name="change" id="changeValue" value="적용">
+    <span id="idshow"></span>
 
-    </div>
+    <!------------- button Script ------------->
+
+    <script>
+        $('#changeValue').click(function(){
+            // tree id 얻어서 배열에 저장.
+            var checked_ids = [];
+            var selectedNode = $('#tree').jstree('get_selected',true);
+            $.each(selectedNode, function(){
+                checked_ids.push(this.id);
+            });
+            $('#idshow').text(checked_ids);
+
+            // 배열정렬
+            checked_ids.sort();
+            console.log(checked_ids);
+            
+            // chartdata 대입
+            var checked_ChartData = [];
+            $.each(checked_ids,function(){
+                if(this == '1Htree'){
+                    checked_ChartData.push(isChartH[0]);
+                }
+                else if(this == '2Ktree'){
+                    checked_ChartData.push(isChartK[0]);
+                }
+                else if(this == '3Ttree'){
+                    checked_ChartData.push(isChartT[0]);
+                }
+                else if(this == '4Htree1'){
+                    checked_ChartData.push(isChartH1[0]);
+                }
+                else if(this == '5Ktree1'){
+                    checked_ChartData.push(isChartK1[0]);
+                }
+                else if(this == '6Ttree1'){
+                    checked_ChartData.push(isChartT1[0]);
+                }
+                else if(this == '7Mtree'){
+                    checked_ChartData.push(isChartM[0]);
+                }
+            });
+
+            // 차트업데이트
+            totalChart.update({
+                series: checked_ChartData
+            });
+            console.log(checked_ChartData);
+
+        });
+    </script>
+
     <!-------------- Tree Script --------------->
     <script>
-
-        $(function(){
+        $(function () {
             $('#tree').jstree({
-                'core' : {
-                    'themes' : {
-                        'icons' : false /* jstree적용 시 리스트마다 생성되는 폴더 아이콘 삭제 */
+                'core': {
+                    'themes': {
+                        'icons': false /* jstree적용 시 리스트마다 생성되는 폴더 아이콘 삭제 */
                     },
-                    'data' : treeData
+                    'data': isTree
                 },
-                'plugins' : [
+                'checbox' : {
+                    'keep_selected_style' : false
+                },
+                'plugins': [
                     'checkbox'
                 ]
             });
+
         });
+
     </script>
 
     <!-- chart div -->
@@ -86,139 +156,249 @@
     </figure>
 
     <!-------------- Chart Script --------------->
-    <script type="text/javascript">
-        
-        Highcharts.setOptions({
-            colors: ['skyblue', 'gray', '#E70D00', 'skyblue', 'gray', '#E70D00', '#5062FF']
-        })
+    <script>
         var ctx = document.getElementById('container');
-        var totalChart = 
-        Highcharts.chart(ctx, {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
-                margin: 50
-
-            },
-            xAxis: {
+        var totalChart =
+            Highcharts.chart(ctx, {
                 title: {
-                    text: '월별'
+                    text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
+                    margin: 50
                 },
-                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                plotLines: [{
-                        /* 이벤트 발생 시 표시 할 라인입니다. */
-                        color: 'red',
-                        dashStyle: 'dot',
-                        width: 1,
-                        value: 3,
-                        label: {
-                            rotation: 0,
-                            /* 라벨 회전 */
-                            y: 45,
-                            /* 라벨 위치 이동 */
-                            style: {
-                                fontSize: '10px'
-                            },
-                            text: '코로나로 공장 정지'
+                xAxis: {
+                    title: {
+                        text: '월별'
+                    },
+                    categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                    plotLines: [{
+                            /* 이벤트 발생 시 표시 할 라인입니다. */
+                            color: 'red',
+                            dashStyle: 'dot',
+                            width: 1,
+                            value: 3,
+                            label: {
+                                rotation: 0,
+                                /* 라벨 회전 */
+                                y: 45,
+                                /* 라벨 위치 이동 */
+                                style: {
+                                    fontSize: '10px'
+                                },
+                                text: '코로나로 공장 정지'
+                            }
+                        },
+                        {
+                            color: 'red',
+                            dashStyle: 'dot',
+                            width: 1,
+                            value: 5,
+                            label: {
+                                y: 20,
+                                style: {
+                                    fontSize: '10px'
+                                },
+                                text: '미국공장화재'
+                            }
+
+                        },
+                        {
+                            color: 'red',
+                            dashStyle: 'dot',
+                            width: 1,
+                            value: 6,
+                            label: {
+                                y: 5,
+                                style: {
+                                    fontSize: '10px'
+                                },
+                                text: '대만공장화재'
+                            }
+                        }
+                    ]
+                },
+                yAxis: [{
+                    min: 0,
+                    labels: {
+                        format: '{value}대'
+                    },
+                    title: {
+                        text: '자동차판매량'
+                    },
+                    stackLabels: {
+                        /* 항목별 데이터 총 합을 표시 */
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: ( // theme
+                                Highcharts.defaultOptions.title.style &&
+                                Highcharts.defaultOptions.title.style.color
+                            ) || 'gray'
+                        }
+                    }
+                }, {
+                    min: 0,
+                    labels: {
+                        format: '{value}EA',
+                        style: {
+                            color: '#5062FF'
                         }
                     },
-                    {
-                        color: 'red',
-                        dashStyle: 'dot',
-                        width: 1,
-                        value: 5,
-                        label: {
-                            y: 20,
-                            style: {
-                                fontSize: '10px'
-                            },
-                            text: '미국공장화재'
+                    title: {
+                        text: '아날로그 반도체 생산량',
+                        style: {
+                            color: '#5062FF'
                         }
-
                     },
-                    {
-                        color: 'red',
-                        dashStyle: 'dot',
-                        width: 1,
-                        value: 6,
-                        label: {
-                            y: 5,
-                            style: {
-                                fontSize: '10px'
-                            },
-                            text: '대만공장화재'
+                    opposite: false /* y축 반대쪽으로  둘건지 확인*/
+                }],
+                legend: {
+                    /* 항목별 설명 */
+                    title: '항목별_정리',
+                    align: 'left',
+                    x: 100,
+                    verticalAlign: 'top',
+                    y: 30,
+                    floating: true,
+                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: true
+                },
+                tooltip: {
+                    /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
+                    headerFormat: '<b>{point.x}</b><br/>',
+                    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        /* 한줄안에 묶여있게하는 옵션! */
+                        dataLabels: {
+                            enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
                         }
                     }
-                ]
-            },
-            yAxis: [{
-                min: 0,
-                labels: {
-                    format: '{value}대'
                 },
-                title: {
-                    text: '자동차판매량'
-                },
-                stackLabels: {
-                    /* 항목별 데이터 총 합을 표시 */
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'gray'
-                    }
-                }
-            }, {
-                min: 0,
-                labels: {
-                    format: '{value}EA',
-                    style: {
-                        color: '#5062FF'
-                    }
-                },
-                title: {
-                    text: '아날로그 반도체 생산량',
-                    style: {
-                        color: '#5062FF'
-                    }
-                },
-                opposite: false /* y축 반대쪽으로  둘건지 확인*/
-            }],
-            legend: {
-                /* 막대그래프 툴팁? */
-                title: '자동차회사',
-                align: 'left',
-                x: 100,
-                verticalAlign: 'top',
-                y: 30,
-                floating: true,
-                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: true
-            },
-            tooltip: {
-                /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
-                headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    /* 한줄안에 묶여있게하는 옵션! */
-                    dataLabels: {
-                        enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
-                    }
-                }
-            },
-            series: chartData
-        });
+                series: isChart
+            });
     </script>
 
+    <!---------------- grid ---------------->
+    <div id="jsGrid"></div>
+
+    <script>
+        $(function () {
+            $("#jsGrid").jsGrid({
+                width: "100%",
+                sorting: true,
+                headerRowRenderer: function () {
+                    var $result = $("<tr>").height(0)
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"))
+                        .append($("<tr>").width("100/13%"));
+
+                    $result = $result.add($("<tr>")
+                        .append($("<th class='jsgrid-cell'>").attr("rowspan", 2).text("메이커")
+                            .height(40))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("1분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("2분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("3분기"))
+                        .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("4분기")));
+
+                    $result = $result.add($("<tr>")
+                        .append($("<th class='jsgrid-cell'>").text("1월"))
+                        .append($("<th class='jsgrid-cell'>").text("2월"))
+                        .append($("<th class='jsgrid-cell'>").text("3월"))
+                        .append($("<th class='jsgrid-cell'>").text("4월"))
+                        .append($("<th class='jsgrid-cell'>").text("5월"))
+                        .append($("<th class='jsgrid-cell'>").text("6월"))
+                        .append($("<th class='jsgrid-cell'>").text("7월"))
+                        .append($("<th class='jsgrid-cell'>").text("8월"))
+                        .append($("<th class='jsgrid-cell'>").text("9월"))
+                        .append($("<th class='jsgrid-cell'>").text("10월"))
+                        .append($("<th class='jsgrid-cell'>").text("11월"))
+                        .append($("<th class='jsgrid-cell'>").text("12월"))
+                    );
+                    return $result;
+                },
+                fields: [{
+                        name: "CarMaker",
+                        type: "text",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M1",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M2",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M3",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M4",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M5",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M6",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M7",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M8",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M9",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M10",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M11",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                    {
+                        name: "M12",
+                        type: "number",
+                        width: "100/13%"
+                    },
+                ],
+                data: isGrid
+            });
+        });
+    </script>
 </body>
 
 </html>
