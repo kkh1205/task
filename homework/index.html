@@ -70,55 +70,128 @@
     <h3>자동차 브랜드 분류</h3>
     <div id=tree></div>
     <input type="button" name="change" id="changeValue" value="적용">
-    <span id="idshow"></span>
 
     <!------------- button Script ------------->
 
     <script>
         $('#changeValue').click(function(){
+
+            // 차트 초기화
+            Data = backUp;
+            isChart = Data.filter(isChartF);
+            isChartH = Data.filter(isChartHF);
+            isChartK = Data.filter(isChartKF);
+            isChartT = Data.filter(isChartTF);
+            isChartH1 = Data.filter(isChartH1F);
+            isChartK1 = Data.filter(isChartK1F);
+            isChartT1 = Data.filter(isChartT1F);
+            isChartM = Data.filter(isChartMF);
+
             // tree id 얻어서 배열에 저장.
             var checked_ids = [];
             var selectedNode = $('#tree').jstree('get_selected',true);
             $.each(selectedNode, function(){
                 checked_ids.push(this.id);
             });
-            $('#idshow').text(checked_ids);
 
             // 배열정렬
             checked_ids.sort();
             console.log(checked_ids);
-            
+
             // chartdata 대입
-            var checked_ChartData = [];
+            var resetC = [0,0,0,0,0,0,0,0,0,0,0,0];
+            for(var i = 0 ; i<totalChart.series.length ;i++) {
+                var isTrue=false;
+                
+                for(var j=0; j <checked_ids.length;j++)
+                {
+                    if(checked_ids[j] == '1Htree' && totalChart.series[i].name =='현대'){
+                        // 체크한지 확인 && 차트name이 '현대'일 때
+                        totalChart.series[i].setData(isChartH[0].data);
+                        isTrue=true;
+                        break;
+                    }
+                    
+                    else if(checked_ids[j] == '2Ktree' && totalChart.series[i].name =='기아')
+                    {
+                        totalChart.series[i].setData(isChartK[0].data);
+                        isTrue=true;
+                        break;
+                    }
+                    
+                    else if(checked_ids[j] == '3Ttree' && totalChart.series[i].name == '테슬라')
+                    {
+                        totalChart.series[i].setData(isChartT[0].data);
+                        isTrue=true;
+                        break;
+                        
+                    }
+                    else if(checked_ids[j] == '4Htree1' && totalChart.series[i].name == '현대1')
+                    {
+                        totalChart.series[i].setData(isChartH1[0].data);
+                        isTrue=true;
+                        break;
+                        
+                    }
+                    else if(checked_ids[j] == '5Ktree1' && totalChart.series[i].name == '기아1')
+                    {
+                        totalChart.series[i].setData(isChartK1[0].data);
+                        isTrue=true;
+                        break;
+                    
+                    }
+                    else if(checked_ids[j] == '6Ttree1' && totalChart.series[i].name == '테슬라1')
+                    {
+                        totalChart.series[i].setData(isChartT1[0].data);
+                        isTrue=true;
+                        break;
+                    
+                    }
+                    else if(checked_ids[j] == '7Mtree' && totalChart.series[i].name == '아날로그 반도체')
+                    {
+                        totalChart.series[i].setData(isChartM[0].data);
+                        isTrue=true;
+                        break;
+                    
+                    }
+                    
+                    
+                }
+            
+                if(!isTrue)
+                    totalChart.series[i].setData(resetC);
+
+            }
+            
+
+            // Grid data 대입
+            // 배열에 체크된 데이터만 저장
+            var checked_GridData = [];
             $.each(checked_ids,function(){
                 if(this == '1Htree'){
-                    checked_ChartData.push(isChartH[0]);
+                checked_GridData.push(isGridH[0]);
                 }
                 else if(this == '2Ktree'){
-                    checked_ChartData.push(isChartK[0]);
+                checked_GridData.push(isGridK[0]);
                 }
                 else if(this == '3Ttree'){
-                    checked_ChartData.push(isChartT[0]);
+                checked_GridData.push(isGridT[0]);
                 }
                 else if(this == '4Htree1'){
-                    checked_ChartData.push(isChartH1[0]);
+                checked_GridData.push(isGridH1[0]);
                 }
                 else if(this == '5Ktree1'){
-                    checked_ChartData.push(isChartK1[0]);
+                checked_GridData.push(isGridK1[0]);
                 }
                 else if(this == '6Ttree1'){
-                    checked_ChartData.push(isChartT1[0]);
+                checked_GridData.push(isGridT1[0]);
                 }
                 else if(this == '7Mtree'){
-                    checked_ChartData.push(isChartM[0]);
+                checked_GridData.push(isGridM[0]);
                 }
             });
-
-            // 차트업데이트
-            totalChart.update({
-                series: checked_ChartData
-            });
-            console.log(checked_ChartData);
+            // grid 옵션에 data를 체크된 데이터를 넣는다. autoload를 켜놔서 자동으로 업데이트 됨.
+            $("#jsGrid").jsGrid("option", "data", checked_GridData);
 
         });
     </script>
@@ -148,11 +221,6 @@
     <!-- chart div -->
     <figure class="highcharts-figure">
         <div id="container"></div>
-        <!-- <p class="highcharts-description">
-      자동차에 들어가는 아날로그 반도체를 생산하는 업체가 코로나로 멈추고, 공장에 불이 나는 등 악재가 겹쳤습니다. <br>
-      기존 반도체 회사들은 기존에 제공하던 IT반도체가 주 거래처이고 마진이 남지않는 아날로그 반도체를 굳이 만들지 않았습니다. <br>
-      많은 자동차 회사들이 반도체 부족으로 차량생산에 차질이 생겼지만, 테슬라는 자체 반도체 생산기지를 가지고 있어 오히려 판매량이 늘었습니다.
-    </p> -->
     </figure>
 
     <!-------------- Chart Script --------------->
@@ -286,9 +354,11 @@
 
     <script>
         $(function () {
+            var grid = 
             $("#jsGrid").jsGrid({
                 width: "100%",
                 sorting: true,
+                autoload: true,
                 headerRowRenderer: function () {
                     var $result = $("<tr>").height(0)
                         .append($("<tr>").width("100/13%"))

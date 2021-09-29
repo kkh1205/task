@@ -1,6 +1,7 @@
 var Data = [
     // grid data
     {
+        id: '1Htree',
         CarMaker: "현대",
         M1: 2500,
         M2: 3000,
@@ -15,6 +16,7 @@ var Data = [
         M11: 1300,
         M12: 1000
     }, {
+        id: '2Ktree',
         CarMaker: "기아",
         M1: 2400,
         M2: 2500,
@@ -29,6 +31,7 @@ var Data = [
         M11: 1400,
         M12: 1200
     }, {
+        id: '3Ttree',
         CarMaker: "테슬라",
         M1: 2800,
         M2: 3000,
@@ -43,6 +46,7 @@ var Data = [
         M11: 7700,
         M12: 6500
     }, {
+        id: '4Htree1',
         CarMaker: "현대1",
         M1: 2500,
         M2: 3000,
@@ -57,6 +61,7 @@ var Data = [
         M11: 1300,
         M12: 1000
     }, {
+        id: '5Ktree1',
         CarMaker: "기아1",
         M1: 2500,
         M2: 3000,
@@ -71,6 +76,7 @@ var Data = [
         M11: 1300,
         M12: 1000
     }, {
+        id: '6Ttree1',
         CarMaker: "테슬라1",
         M1: 2500,
         M2: 3000,
@@ -85,6 +91,7 @@ var Data = [
         M11: 1300,
         M12: 1000
     }, {
+        id : '7Mtree',
         CarMaker: "반도체",
         M1: 9800,
         M2: 9500,
@@ -152,45 +159,52 @@ var Data = [
     // chart data
 
     {
+        id : '1Htree',
         type: 'column',
         name: '현대',
         color: 'skyblue',
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '0' /* stack이 데이터값을 분류해줍니다. */
     }, {
+        id : '2Ktree',
         type: 'column',
         name: '기아',
         color: 'gray',
         data: [2400, 2500, 3000, 2800, 4000, 3200, 4800, 6100, 2800, 2000, 1400, 1200],
         stack: '0'
     }, {
+        id : '3Ttree',
         type: 'column',
         name: '테슬라',
         color: '#E70D00',
         data: [2800, 3000, 2900, 3100, 2500, 3400, 5000, 5500, 6700, 7000, 7700, 6500],
         stack: '0'
     }, {
+        id : '4Htree1',
         type: 'column',
         name: '현대1',
         color: 'skyblue',
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
-        showInLegend: true /* false : 범례에 표시하지 않음. */
+        // showInLegend: true /* false : 범례에 표시하지 않음. */
     }, {
+        id : '5Ktree1',
         type: 'column',
         name: '기아1',
         color: 'gray',
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
-        showInLegend: true
+        //showInLegend: true
     }, {
+        id : '6Ttree1',
         type: 'column',
         name: '테슬라1',
         color: '#E70D00',
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
-        showInLegend: true
+        //showInLegend: true
     }, {
+        id : '7Mtree',
         type: 'line',
         name: '아날로그 반도체',
         color: '#5062FF',
@@ -209,89 +223,91 @@ var Data = [
     }
 ]
 
+var backUp = JSON.parse(JSON.stringify(Data));
+
 // ----------------Tree Data-------------------
 
-function isTree(element) {
-    if (element.id == 'Korea' || element.id == 'import' || element.id == '1Htree' || element.id == '2Ktree' || element.id == '3Ttree' || element.id == '4Htree1' || element.id == '5Ktree1' || element.id == '6Ttree1' || element.id == '7Mtree') {
+function isTreeF(element) {
+    if (element.text == '국산차' || element.text == '수입차' || element.text == '현대' || element.text == '기아' || element.text == '테슬라' || element.text == '현대1' || element.text == '기아1' || element.text == '테슬라1' || element.text == '반도체') {
         return true;
     }
 }
 
-var isTree = Data.filter(isTree);
+var isTree = Data.filter(isTreeF);
 
 console.log(isTree);
 
 // ------------- Chart Data --------------
 
-function isChart(element) {
+function isChartF(element) {
     if(element.name == '현대' || element.name == '기아' || element.name == '테슬라' || element.name == '현대1' || element.name == '기아1' || element.name == '테슬라1' || element.name == '아날로그 반도체') {
         return true;
     }
 }
 
-var isChart = Data.filter(isChart);
+var isChart = Data.filter(isChartF);
 
 console.log(isChart);
 
-function isChartH(element) {
+function isChartHF(element) {
     if(element.name == '현대') {
         return true;
     }
 }
 
-function isChartK(element) {
+function isChartKF(element) {
     if(element.name == '기아') {
         return true;
     }
 }
 
-function isChartT(element) {
+function isChartTF(element) {
     if(element.name == '테슬라') {
         return true;
     }
 }
 
-function isChartH1(element) {
+function isChartH1F(element) {
     if(element.name == '현대1') {
         return true;
     }
 }
 
-function isChartK1(element) {
+function isChartK1F(element) {
     if(element.name == '기아1') {
         return true;
     }
 }
 
-function isChartT1(element) {
+function isChartT1F(element) {
     if(element.name =='테슬라1') {
         return true;
     }
 }
 
-function isChartM(element) {
+function isChartMF(element) {
     if(element.name == '아날로그 반도체') {
         return true;
     }
 }
 
-var isChartH = Data.filter(isChartH);
-var isChartK = Data.filter(isChartK);
-var isChartT = Data.filter(isChartT);
-var isChartH1 = Data.filter(isChartH1);
-var isChartK1 = Data.filter(isChartK1);
-var isChartT1 = Data.filter(isChartT1);
-var isChartM = Data.filter(isChartM);
+var isChartH = Data.filter(isChartHF);
+var isChartK = Data.filter(isChartKF);
+var isChartT = Data.filter(isChartTF);
+var isChartH1 = Data.filter(isChartH1F);
+var isChartK1 = Data.filter(isChartK1F);
+var isChartT1 = Data.filter(isChartT1F);
+var isChartM = Data.filter(isChartMF);
 
 // -------------- Grid Data --------------
 
-function isGrid (element) {
+function isGridF (element) {
     if(element.CarMaker == '현대' || element.CarMaker == '기아' || element.CarMaker == '테슬라' || element.CarMaker == '현대1' || element.CarMaker == '기아1' || element.CarMaker == '테슬라1' || element.CarMaker == '반도체') {
         return true;
     }
 }
 
-var isGrid = Data.filter(isGrid);
+var isGrid = Data.filter(isGridF);
 
 console.log(isGrid);
 
