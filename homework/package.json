@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "exceljs": "^4.3.0",
     "highcharts": "^9.2.2",
     "jstree": "^3.3.12"
   }
