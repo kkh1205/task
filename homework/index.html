@@ -188,7 +188,14 @@
             $("#jsGrid").jsGrid("option", "data", checked_GridData);
             console.log(checked_GridData);
 
+            // sheetjs에서 쓸 data 전역변수에 저장
+            excelData = checked_GridData;
+            console.log(excelData);
         });
+        var excelData = {}
+        excelData = isGrid;
+        console.log(excelData);
+        
     </script>
 
     <!-------------- Tree Script --------------->
@@ -501,39 +508,10 @@
             wb.SheetNames.push("sheet 1");
             // wb.SheetNames.push("sheet 2"); // 시트가 여러개인 경우
 
-            // 데이터 뽑기
-            var checked_ids = [];
-            var selectedNode = $('#tree').jstree('get_selected', true);
-            $.each(selectedNode, function () {
-            checked_ids.push(this.id);
-            });
-            checked_ids.sort();
-            console.log('excel : '+ checked_ids);
-
-            var checked_GridData = {
-                data: []
-            }
-            $.each(checked_ids, function () {
-            if (this == '1Htree') {
-            checked_GridData.data.push(isGridH[0]);
-            } else if (this == '2Ktree') {
-            checked_GridData.data.push(isGridK[0]);
-            } else if (this == '3Ttree') {
-            checked_GridData.data.push(isGridT[0]);
-            } else if (this == '4Htree1') {
-            checked_GridData.data.push(isGridH1[0]);
-            } else if (this == '5Ktree1') {
-            checked_GridData.data.push(isGridK1[0]);
-            } else if (this == '6Ttree1') {
-            checked_GridData.data.push(isGridT1[0]);
-            } else if (this == '7Mtree') {
-            checked_GridData.data.push(isGridM[0]);
-            }
-            });
-            console.log('excel : '+JSON.stringify(checked_GridData.data));
+            // 데이터 뽑기 전역변수 excelData 사용
 
             let checkExData = [['메이커','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']];
-            checked_GridData.data.forEach((item)=>{
+            excelData.forEach((item)=>{
                 checkExData.push([item.CarMaker,
                 parseInt(item.M1),parseInt(item.M2),parseInt(item.M3),parseInt(item.M4),parseInt(item.M5),parseInt(item.M6),parseInt(item.M7),parseInt(item.M8),parseInt(item.M9),parseInt(item.M10),parseInt(item.M11),parseInt(item.M12)]);
             });
