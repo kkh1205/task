@@ -10,6 +10,7 @@
     <!-- 사용할 js 모듈들 -->
     <script src="./js/jquery-3.6.0.min.js"></script>
     <script src="./data/Data.js"></script>
+    <script src="./indexlo.js"></script>
     <!-- 트리 -->
     <script src="./node_modules/jstree/src/jstree.js"></script>
     <script src="./node_modules/jstree/src/jstree.checkbox.js"></script>
@@ -78,19 +79,31 @@
             width: 20%;
         }
     </style>
-</head>
 
-<body>
-
-    <h3>자동차 브랜드 분류</h3>
-    <div id=tree></div>
-    <input type="button" name="change" id="changeValue" value="적용">
-
-    <!------------- button Script ------------->
+    <!-- ############ header script ############ -->
 
     <script>
-        $('#changeValue').click(function () {
+        // --------------- set tree -------------
+        $(function treeset() {
+            $('#tree').jstree({
+                'core': {
+                    'themes': {
+                        'icons': false /* jstree적용 시 리스트마다 생성되는 폴더 아이콘 삭제 */
+                    },
+                    'data': isTree
+                },
+                'checbox': {
+                    'keep_selected_style': false
+                },
+                'plugins': [
+                    'checkbox'
+                ]
+            });
 
+        });
+
+        // ------------ set chart ---------------
+        function test () {
             // 차트 초기화
             Data = backUp;
             isChart = Data.filter(isChartF);
@@ -155,7 +168,6 @@
 
                     }
 
-
                 }
 
                 if (!isTrue)
@@ -191,169 +203,9 @@
             // sheetjs에서 쓸 data 전역변수에 저장
             excelData = checked_GridData;
             console.log(excelData);
-        });
-        var excelData = {}
-        excelData = isGrid;
-        console.log(excelData);
-        
-    </script>
+        };
 
-    <!-------------- Tree Script --------------->
-    <script>
-        $(function () {
-            $('#tree').jstree({
-                'core': {
-                    'themes': {
-                        'icons': false /* jstree적용 시 리스트마다 생성되는 폴더 아이콘 삭제 */
-                    },
-                    'data': isTree
-                },
-                'checbox': {
-                    'keep_selected_style': false
-                },
-                'plugins': [
-                    'checkbox'
-                ]
-            });
-
-        });
-    </script>
-
-    <!-- chart div -->
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-    </figure>
-
-    <!-------------- Chart Script --------------->
-    <script>
-        var ctx = document.getElementById('container');
-        var totalChart =
-            Highcharts.chart(ctx, {
-                title: {
-                    text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
-                    margin: 50
-                },
-                xAxis: {
-                    title: {
-                        text: '월별'
-                    },
-                    categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                    plotLines: [{
-                            /* 이벤트 발생 시 표시 할 라인입니다. */
-                            color: 'red',
-                            dashStyle: 'dot',
-                            width: 1,
-                            value: 3,
-                            label: {
-                                rotation: 0,
-                                /* 라벨 회전 */
-                                y: 45,
-                                /* 라벨 위치 이동 */
-                                style: {
-                                    fontSize: '10px'
-                                },
-                                text: '코로나로 공장 정지'
-                            }
-                        },
-                        {
-                            color: 'red',
-                            dashStyle: 'dot',
-                            width: 1,
-                            value: 5,
-                            label: {
-                                y: 20,
-                                style: {
-                                    fontSize: '10px'
-                                },
-                                text: '미국공장화재'
-                            }
-
-                        },
-                        {
-                            color: 'red',
-                            dashStyle: 'dot',
-                            width: 1,
-                            value: 6,
-                            label: {
-                                y: 5,
-                                style: {
-                                    fontSize: '10px'
-                                },
-                                text: '대만공장화재'
-                            }
-                        }
-                    ]
-                },
-                yAxis: [{
-                    min: 0,
-                    labels: {
-                        format: '{value}대'
-                    },
-                    title: {
-                        text: '자동차판매량'
-                    },
-                    stackLabels: {
-                        /* 항목별 데이터 총 합을 표시 */
-                        enabled: true,
-                        style: {
-                            fontWeight: 'bold',
-                            color: ( // theme
-                                Highcharts.defaultOptions.title.style &&
-                                Highcharts.defaultOptions.title.style.color
-                            ) || 'gray'
-                        }
-                    }
-                }, {
-                    min: 0,
-                    labels: {
-                        format: '{value}EA',
-                        style: {
-                            color: '#5062FF'
-                        }
-                    },
-                    title: {
-                        text: '아날로그 반도체 생산량',
-                        style: {
-                            color: '#5062FF'
-                        }
-                    },
-                    opposite: false /* y축 반대쪽으로  둘건지 확인*/
-                }],
-                legend: {
-                    /* 항목별 설명 */
-                    title: '항목별_정리',
-                    align: 'left',
-                    x: 100,
-                    verticalAlign: 'top',
-                    y: 30,
-                    floating: true,
-                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                    borderColor: '#CCC',
-                    borderWidth: 1,
-                    shadow: true
-                },
-                tooltip: {
-                    /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
-                    headerFormat: '<b>{point.x}</b><br/>',
-                    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal',
-                        /* 한줄안에 묶여있게하는 옵션! */
-                        dataLabels: {
-                            enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
-                        }
-                    }
-                },
-                series: isChart
-            });
-    </script>
-
-    <!---------------- grid ---------------->
-    <div id="jsGrid"></div>
-
-    <script>
+        // ------------- set Grid ---------------
         $(function () {
             var grid =
                 $("#jsGrid").jsGrid({
@@ -469,14 +321,8 @@
                     data: isGrid
                 });
         });
-    </script>
 
-    <!-- export excel file -->
-    <div id="exportdiv">
-        <input type="button" value="excel export" id="exportButton" onclick="exportExcel();">
-    </div>
-
-    <script>
+        // ------------- export excel ----------------
         function exportExcel() {
             // ArrayBuffer 만들어주는 함수
             function s2ab(s) {
@@ -510,10 +356,15 @@
 
             // 데이터 뽑기 전역변수 excelData 사용
 
-            let checkExData = [['메이커','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']];
-            excelData.forEach((item)=>{
+            let checkExData = [
+                ['메이커', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+            ];
+            excelData.forEach((item) => {
                 checkExData.push([item.CarMaker,
-                parseInt(item.M1),parseInt(item.M2),parseInt(item.M3),parseInt(item.M4),parseInt(item.M5),parseInt(item.M6),parseInt(item.M7),parseInt(item.M8),parseInt(item.M9),parseInt(item.M10),parseInt(item.M11),parseInt(item.M12)]);
+                    parseInt(item.M1), parseInt(item.M2), parseInt(item.M3), parseInt(item.M4),
+                    parseInt(item.M5), parseInt(item.M6), parseInt(item.M7), parseInt(item.M8),
+                    parseInt(item.M9), parseInt(item.M10), parseInt(item.M11), parseInt(item.M12)
+                ]);
             });
 
             console.log(checkExData);
@@ -541,7 +392,160 @@
                 type: "application/octet-stream"
             }), '엑셀_다운로드.xlsx');
         }
+
+        var excelData = {}
+        excelData = isGrid;
     </script>
+</head>
+
+<!--------------------------- body ---------------------------->
+
+<body>
+
+    <h3>자동차 브랜드 분류</h3>
+    <div id=tree></div>
+    <input type="button" name="change" id="changeValue" value="적용" onclick="test();">
+
+    <!-- chart div -->
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
+    <!-------------- Chart Script --------------->
+    <script>
+        var ctx;
+        var totalChart;
+        ctx = document.getElementById('container');
+        totalChart = Highcharts.chart(ctx, {
+            title: {
+                text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
+                margin: 50
+            },
+            xAxis: {
+                title: {
+                    text: '월별'
+                },
+                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
+                    '12월'
+                ],
+                plotLines: [{
+                        /* 이벤트 발생 시 표시 할 라인입니다. */
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 3,
+                        label: {
+                            rotation: 0,
+                            /* 라벨 회전 */
+                            y: 45,
+                            /* 라벨 위치 이동 */
+                            style: {
+                                fontSize: '10px'
+                            },
+                            text: '코로나로 공장 정지'
+                        }
+                    },
+                    {
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 5,
+                        label: {
+                            y: 20,
+                            style: {
+                                fontSize: '10px'
+                            },
+                            text: '미국공장화재'
+                        }
+
+                    },
+                    {
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 6,
+                        label: {
+                            y: 5,
+                            style: {
+                                fontSize: '10px'
+                            },
+                            text: '대만공장화재'
+                        }
+                    }
+                ]
+            },
+            yAxis: [{
+                min: 0,
+                labels: {
+                    format: '{value}대'
+                },
+                title: {
+                    text: '자동차판매량'
+                },
+                stackLabels: {
+                    /* 항목별 데이터 총 합을 표시 */
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: ( // theme
+                            Highcharts.defaultOptions.title.style &&
+                            Highcharts.defaultOptions.title.style.color
+                        ) || 'gray'
+                    }
+                }
+            }, {
+                min: 0,
+                labels: {
+                    format: '{value}EA',
+                    style: {
+                        color: '#5062FF'
+                    }
+                },
+                title: {
+                    text: '아날로그 반도체 생산량',
+                    style: {
+                        color: '#5062FF'
+                    }
+                },
+                opposite: false /* y축 반대쪽으로  둘건지 확인*/
+            }],
+            legend: {
+                /* 항목별 설명 */
+                title: '항목별_정리',
+                align: 'left',
+                x: 100,
+                verticalAlign: 'top',
+                y: 30,
+                floating: true,
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                shadow: true
+            },
+            tooltip: {
+                /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
+                headerFormat: '<b>{point.x}</b><br/>',
+                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    /* 한줄안에 묶여있게하는 옵션! */
+                    dataLabels: {
+                        enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
+                    }
+                }
+            },
+            series: isChart
+        });
+    </script>
+
+    <!---------------- grid ---------------->
+    <div id="jsGrid"></div>
+
+    <!-- export excel file -->
+    <div id="exportdiv">
+        <input type="button" value="excel export" id="exportButton" onclick="exportExcel();">
+    </div>
 
 </body>
 

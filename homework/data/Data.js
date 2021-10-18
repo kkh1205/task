@@ -221,7 +221,7 @@ var Data = [
             enabled: false /* 라인그래프에 라벨 숨기기 */
         }
     }
-]
+];
 
 var backUp = JSON.parse(JSON.stringify(Data));
 
