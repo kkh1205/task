@@ -1,0 +1,41 @@
+.highcharts-figure {
+    position: absolute;
+    width: 65vw;
+    right: 0;
+}
+
+#tree {
+    border: 1px solid #000;
+    position: absolute;
+    width: 20%;
+    height: 50vh;
+    top: 50px;
+}
+
+#changeValue {
+    position: absolute;
+    width: 5vw;
+    height: 5vh;
+    left: 15%;
+    top: 8%;
+}
+
+#jsGrid {
+    position: absolute;
+    top: 63vh;
+    margin-bottom: 470px;
+}
+
+#exportButton {
+    position: absolute;
+    top: 58vh;
+    left: .5vw;
+    height: 5vh;
+    width: 7vw;
+}
+
+h3 {
+    border: 1px solid #000;
+    position: absolute;
+    width: 20%;
+}

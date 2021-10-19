@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>checkbox table</title>
+
+    <script src="./node_modules/jquery/src/jquery.js"></script>
 </head>
 <body>
 
@@ -44,6 +46,7 @@
             let tdN = document.createElement('td');
             let tdA = document.createElement('td');
             let tdM = document.createElement('td');
+                tdM.setAttribute('class','male')
             tdN.innerHTML = data[i].name;
             tdA.innerHTML = data[i].age;
             tdM.innerHTML = data[i].male;
@@ -57,14 +60,16 @@
     </script>
 
     <div>
-        <input type="checkbox" name="man" id="mancb" value="0" onchange="Filter(this);">남자
-        <input type="checkbox" name="woman" id="womancb" value="1" onchange="Filter(this);">여자
+        <input type="checkbox" name="man" id="mancb" value=0 onchange="Filter(this);">남자
+        <input type="checkbox" name="woman" id="womancb" value=1 onchange="Filter(this);">여자
         <input type="button" value="Filter" onclick="">
     </div>
 
     <script>
-        function Filter(){
-            
+        function Filter(cbx){
+            if(cbx.value == 0) {
+                var mw = $('.male').html();
+            }
         }
     </script>
 </body>

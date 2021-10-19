@@ -113,17 +113,20 @@ var Data = [
         id: 'Korea',
         parent: '#',
         text: '국산차',
-        state: {
+        state: 
+        {
             selected: true
         }
-    }, {
+    }, 
+    {
         id: 'import',
         parent: '#',
         text: '수입차',
         state: {
             selected: true
         }
-    }, {
+    }, 
+    {
         id: '1Htree',
         parent: 'Korea',
         text: '현대'
@@ -163,6 +166,7 @@ var Data = [
         type: 'column',
         name: '현대',
         color: 'skyblue',
+        sort: 0,
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '0' /* stack이 데이터값을 분류해줍니다. */
     }, {
@@ -170,6 +174,7 @@ var Data = [
         type: 'column',
         name: '기아',
         color: 'gray',
+        sort: 1,
         data: [2400, 2500, 3000, 2800, 4000, 3200, 4800, 6100, 2800, 2000, 1400, 1200],
         stack: '0'
     }, {
@@ -177,6 +182,7 @@ var Data = [
         type: 'column',
         name: '테슬라',
         color: '#E70D00',
+        sort:2,
         data: [2800, 3000, 2900, 3100, 2500, 3400, 5000, 5500, 6700, 7000, 7700, 6500],
         stack: '0'
     }, {
@@ -184,6 +190,7 @@ var Data = [
         type: 'column',
         name: '현대1',
         color: 'skyblue',
+        sort:3,
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
         // showInLegend: true /* false : 범례에 표시하지 않음. */
@@ -192,6 +199,7 @@ var Data = [
         type: 'column',
         name: '기아1',
         color: 'gray',
+        sort:4,
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
         //showInLegend: true
@@ -200,6 +208,7 @@ var Data = [
         type: 'column',
         name: '테슬라1',
         color: '#E70D00',
+        sort:5,
         data: [2500, 3000, 4000, 3000, 3700, 2800, 5000, 7500, 3400, 2200, 1300, 1000],
         stack: '1',
         //showInLegend: true
@@ -208,6 +217,7 @@ var Data = [
         type: 'line',
         name: '아날로그 반도체',
         color: '#5062FF',
+        sort:6,
         yAxis: 1,
         /* 두번째 y축 선택 */
         data: [9800, 9500, 9750, 7000, 6830, 6000, 3200, 3100, 2840, 2700, 2230, 1400],
@@ -219,7 +229,8 @@ var Data = [
         },
         label: {
             enabled: false /* 라인그래프에 라벨 숨기기 */
-        }
+        },
+        zIndex: 1
     }
 ];
 

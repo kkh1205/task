@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,58 +33,8 @@
     <link rel="stylesheet" href="./node_modules/jstree/src/themes/default/style.css">
     <link rel="stylesheet" href="./css/jsgrid.css">
     <link rel="stylesheet" href="./css/jsgrid-theme.css">
-    <!-- 스타일 -->
-    <style>
-        .highcharts-figure {
-            position: absolute;
-            width: 65vw;
-            right: 0;
-        }
-
-        #tree {
-            border: 1px solid #000;
-            position: absolute;
-            width: 20%;
-            height: 50vh;
-            top: 50px;
-        }
-
-        #changeValue {
-            position: absolute;
-            width: 5vw;
-            height: 5vh;
-            left: 15%;
-            top: 8%;
-        }
-
-        #jsGrid {
-            position: absolute;
-            top: 63vh;
-            margin-bottom: 470px;
-        }
-
-        #exportButton {
-            position: absolute;
-            top: 58vh;
-            left: .5vw;
-            height: 5vh;
-            width: 7vw;
-        }
-
-        h3 {
-            border: 1px solid #000;
-            position: absolute;
-            width: 20%;
-        }
-    </style>
-
-    <script>
-        
-    </script>
-
+    <link rel="stylesheet" href="./css/custom.css">
 </head>
-
-<!--------------------------- body ---------------------------->
 
 <body>
 
@@ -108,91 +56,200 @@
         <input type="button" value="excel export" id="exportButton" onclick="exportExcel();">
     </div>
 
-    <!-------------- Chart Script --------------->
+
+    <!-- button, chart script. only bodyTag. (highcharts library works in the bodyTag only.) -->
     <script>
-        var ctx;
-        var totalChart;
-        ctx = document.getElementById('container');
-        totalChart = Highcharts.chart(ctx, {
-            title: {
-                text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
-                margin: 50
-            },
-            xAxis: {
-                title: {
-                    text: '월별'
-                },
-                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
-                    '12월'
-                ],
-                plotLines: pline // chartOptions.js 
-            },
-            yAxis: [{
-                min: 0,
-                labels: {
-                    format: '{value}대'
-                },
-                title: {
-                    text: '자동차판매량'
-                },
-                stackLabels: {
-                    /* 항목별 데이터 총 합을 표시 */
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'gray'
-                    }
+        var ctx = document.getElementById('container');
+
+        function button() {
+
+            // -------- checkbox checkvalue -----------
+
+            var checked_ids = [];
+            var selectedNode = $('#tree').jstree('get_selected', true);
+            $.each(selectedNode, function () {
+                checked_ids.push(this.id);
+            });
+
+            // ---------- chart draw ------------
+            var ctseries = [];
+            for (var i = 0; i < checked_ids.length; i++) {
+                if (checked_ids[i] == '1Htree')
+                {
+                    ctseries.push(isChartH[0]);
                 }
-            }, {
-                min: 0,
-                labels: {
-                    format: '{value}EA',
-                    style: {
-                        color: '#5062FF'
-                    }
-                },
-                title: {
-                    text: '아날로그 반도체 생산량',
-                    style: {
-                        color: '#5062FF'
-                    }
-                },
-                opposite: false /* y축 반대쪽으로  둘건지 확인*/
-            }],
-            legend: {
-                /* 항목별 설명 */
-                title: '항목별_정리',
-                align: 'left',
-                x: 100,
-                verticalAlign: 'top',
-                y: 30,
-                floating: true,
-                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: true
-            },
-            tooltip: {
-                /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
-                headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    /* 한줄안에 묶여있게하는 옵션! */
-                    dataLabels: {
-                        enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
-                    }
+                else if (checked_ids[i] == '2Ktree') 
+                {
+                    ctseries.push(isChartK[0]);
                 }
-            },
-            series: isChart
-        });
+                else if (checked_ids[i] == '3Ttree') 
+                {
+                    ctseries.push(isChartT[0]);
+                }
+                else if (checked_ids[i] == '4Htree1') 
+                {
+                    ctseries.push(isChartH1[0]);
+                } 
+                else if (checked_ids[i] == '5Ktree1') 
+                {
+                    ctseries.push(isChartK1[0]);
+                } 
+                else if (checked_ids[i] == '6Ttree1') 
+                {
+                    ctseries.push(isChartT1[0]);
+                } 
+                else if (checked_ids[i] == '7Mtree') 
+                {
+                    ctseries.push(isChartM[0]);
+                }
+            }
+            ctseries = ctseries.sort(function (a, b) {
+                return a.sort < b.sort ? -1 : a.sort > b.sort ? 1 : 0;
+            });
+
+            Highcharts.chart(ctx, {
+                title: 
+                {
+                    text: '<b>월별 자동차 판매량</b> 및 <b style="color:#5062FF">아날로그 반도체 생산량</b>',
+                    margin: 50
+                },
+                xAxis: 
+                {
+                    title: 
+                    {
+                        text: '월별'
+                    },
+                    categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
+                        '12월'
+                    ],
+                    plotLines: pline // chartOptions.js
+                },
+                yAxis: [
+                {
+                    min: 0,
+                    labels: 
+                    {
+                        format: '{value}대'
+                    },
+                    title: 
+                    {
+                        text: '자동차판매량'
+                    },
+                    stackLabels: 
+                    {
+                        /* 항목별 데이터 총 합을 표시 */
+                        enabled: true,
+                        style: 
+                        {
+                            fontWeight: 'bold',
+                            color: ( // theme
+                                Highcharts.defaultOptions.title.style &&
+                                Highcharts.defaultOptions.title.style.color
+                            ) || 'gray'
+                        }
+                    }
+                }, 
+                {
+                    min: 0,
+                    labels: 
+                    {
+                        format: '{value}EA',
+                        style: 
+                        {
+                            color: '#5062FF'
+                        }
+                    },
+                    title: 
+                    {
+                        text: '아날로그 반도체 생산량',
+                        style: 
+                        {
+                            color: '#5062FF'
+                        }
+                    },
+                    opposite: false /* y축 반대쪽으로 둘건지 확인*/
+                }],
+                legend: 
+                {
+                    /* 항목별 설명 */
+                    title: '항목별_정리',
+                    align: 'left',
+                    x: 100,
+                    verticalAlign: 'top',
+                    y: 30,
+                    floating: true,
+                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: true
+                },
+                tooltip: 
+                {
+                    /* 그래프에 마우스오버 했을 때 나타나는 툴팁입니다. */
+                    headerFormat: '<b>{point.x}</b><br />',
+                    pointFormat: '{series.name}: {point.y}<br />Total: {point.stackTotal}'
+                },
+                plotOptions: 
+                {
+                    column: 
+                    {
+                        stacking: 'normal',
+                        /* 한줄안에 묶여있게하는 옵션! */
+                        dataLabels: 
+                        {
+                            enabled: false /* 그래프 위에 데이터 표시 지저분해서 안썼습니다. */
+                        }
+                    }
+                },
+                series: ctseries
+            });
+
+            // ---------- Grid data 대입 -------------
+            // 배열에 체크된 데이터만 저장
+            var checked_GridData = [];
+            $.each(checked_ids, function () {
+                if (this == '1Htree') 
+                {
+                    checked_GridData.push(isGridH[0]);
+                } 
+                else if (this == '2Ktree') 
+                {
+                    checked_GridData.push(isGridK[0]);
+                }
+                else if (this == '3Ttree') 
+                {
+                    checked_GridData.push(isGridT[0]);
+                }
+                else if (this == '4Htree1') 
+                {
+                    checked_GridData.push(isGridH1[0]);
+                } 
+                else if (this == '5Ktree1') 
+                {
+                    checked_GridData.push(isGridK1[0]);
+                } 
+                else if (this == '6Ttree1') 
+                {
+                    checked_GridData.push(isGridT1[0]);
+                }
+                else if (this == '7Mtree') 
+                {
+                    checked_GridData.push(isGridM[0]);
+                }
+            });
+            // grid 옵션에 data를 체크된 데이터를 넣는다. autoload를 켜놔서 자동으로 업데이트 됨.
+            $("#jsGrid").jsGrid("option", "data", checked_GridData);
+            console.log(checked_GridData);
+
+            // sheetjs에서 쓸 data 전역변수에 저장
+            excelData = checked_GridData;
+            console.log(excelData);
+
+        }
+        // 최초 실행.
+        setTimeout('button()',200);
     </script>
-    
+
 </body>
 
 </html>
