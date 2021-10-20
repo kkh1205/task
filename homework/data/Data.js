@@ -2,6 +2,7 @@ var Data = [
     // grid data
     {
         id: '1Htree',
+        sort: 0,
         CarMaker: "현대",
         M1: 2500,
         M2: 3000,
@@ -17,6 +18,7 @@ var Data = [
         M12: 1000
     }, {
         id: '2Ktree',
+        sort: 1,
         CarMaker: "기아",
         M1: 2400,
         M2: 2500,
@@ -32,6 +34,7 @@ var Data = [
         M12: 1200
     }, {
         id: '3Ttree',
+        sort: 2,
         CarMaker: "테슬라",
         M1: 2800,
         M2: 3000,
@@ -47,6 +50,7 @@ var Data = [
         M12: 6500
     }, {
         id: '4Htree1',
+        sort: 3,
         CarMaker: "현대1",
         M1: 2500,
         M2: 3000,
@@ -62,6 +66,7 @@ var Data = [
         M12: 1000
     }, {
         id: '5Ktree1',
+        sort: 4,
         CarMaker: "기아1",
         M1: 2500,
         M2: 3000,
@@ -77,6 +82,7 @@ var Data = [
         M12: 1000
     }, {
         id: '6Ttree1',
+        sort: 5,
         CarMaker: "테슬라1",
         M1: 2500,
         M2: 3000,
@@ -92,6 +98,7 @@ var Data = [
         M12: 1000
     }, {
         id : '7Mtree',
+        sort: 6,
         CarMaker: "반도체",
         M1: 9800,
         M2: 9500,
@@ -371,3 +378,60 @@ var isGridH1 = Data.filter(isGridH1);
 var isGridK1 = Data.filter(isGridK1);
 var isGridT1 = Data.filter(isGridT1);
 var isGridM = Data.filter(isGridM);
+
+
+// chart option. highcharts library가 참조되는 option이 많아 다 옮기지 못함.
+
+var pline = [
+    {
+        /* 이벤트 발생 시 표시 할 라인입니다. */
+        color: 'red',
+        dashStyle: 'dot',
+        width: 1,
+        value: 3,
+        label: 
+        {
+            rotation: 0,
+            /* 라벨 회전 */
+            y: 45,
+            /* 라벨 위치 이동 */
+            style: 
+            {
+                fontSize: '10px'
+            },
+            text: '코로나로 공장 정지'
+        }
+    },
+    {
+        color: 'red',
+        dashStyle: 'dot',
+        width: 1,
+        value: 5,
+        label: 
+        {
+            y: 20,
+            style: 
+            {
+                fontSize: '10px'
+            },
+            text: '미국공장화재'
+        }
+
+    },
+    {
+        color: 'red',
+        dashStyle: 'dot',
+        width: 1,
+        value: 6,
+        label: 
+        {
+            y: 5,
+            style:
+            {
+                fontSize: '10px'
+            },
+            text: '대만공장화재'
+        }
+    }
+]
+

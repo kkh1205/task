@@ -60,15 +60,15 @@
     </script>
 
     <div>
-        <input type="checkbox" name="man" id="mancb" value=0 onchange="Filter(this);">남자
-        <input type="checkbox" name="woman" id="womancb" value=1 onchange="Filter(this);">여자
+        <input type="checkbox" name="man" id="mancb" value=0 >남자
+        <input type="checkbox" name="woman" id="womancb" value=1 >여자
         <input type="button" value="Filter" onclick="">
     </div>
 
     <script>
-        function Filter(cbx){
-            if(cbx.value == 0) {
-                var mw = $('.male').html();
+        function tt (){
+            if($('input:checkbox[id="mancb"]').is(':checked') == true) {
+                
             }
         }
     </script>
