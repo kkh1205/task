@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>table</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./tb.js"></script>
 </head>
 <body>
+    <div>
+        <input type="checkbox" value="all" id="all">ALL
+        <input type="checkbox" value="TeamA" id="teamA" onchange="cbf(this);">TeamA
+        <input type="checkbox" value="TeamB" id="teamB" onchange="cbf(this);">TeamB
+        <input type="checkbox" value="TeamC" id="teamC" onchange="cbf(this);">TeamC 
+        <input type="button" value="Filter" onclick="ftbt();">
+    </div>
+
     <div id="setdiv">
         <script>
             cret();

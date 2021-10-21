@@ -247,7 +247,6 @@ function chartsetdata() {
     });
     return ctseries;
 }
-
 // ------------ set griddata ---------------
 function setgridData() {
     // 배열에 체크된 데이터만 저장
