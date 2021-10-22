@@ -288,3 +288,21 @@ function setgridData() {
     console.log(excelData);
 
 }
+
+// ---------- menu -----------
+function setPage() {
+    var page = document.location.pathname;
+    var findval = 'table.html';
+    var ival = page.indexOf(findval);
+    var findval2 = 'index.html';
+    var ival2 = page.indexOf(findval2)
+    var title = document.getElementById('headerTitle');
+
+    if (ival != -1) {
+        document.getElementById('jqpage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'JQUERY만 사용한 페이지'
+    } else if (ival2 != -1) {
+        document.getElementById('apipage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'API 사용한 페이지'
+    }
+}

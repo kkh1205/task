@@ -106,12 +106,15 @@ function cret() {
     var ctrth = document.createElement('tr');
     ctrth.setAttribute('id', 'thtr');
     var teamth = document.createElement('th');
+    teamth.setAttribute('id', 'teamth');
     teamth.setAttribute('rowspan', '3');
     teamth.innerHTML = 'TEAM';
     var manth = document.createElement('th');
+    manth.setAttribute('id', 'manth');
     manth.setAttribute('rowspan', '3');
     manth.innerHTML = 'MAN';
     var womanth = document.createElement('th');
+    womanth.setAttribute('id', 'womanth');
     womanth.setAttribute('rowspan', '3');
     womanth.innerHTML = 'WOMAN'
     var yth = document.createElement('th');
@@ -133,6 +136,7 @@ function cret() {
 
     for (var i = 0; i < 12; i++) {
         var mth = document.createElement('th');
+        mth.setAttribute('id', 'mth');
         mth.setAttribute('colspan', '3');
         j = (i + 1).toString();
         mth.innerHTML = j + '월'
@@ -280,4 +284,23 @@ function ftbt() {
         count++;
     }
     count = 0;
+}
+
+//------------------------------------------------------------------
+
+function setPage() {
+    var page = document.location.pathname;
+    var findval = 'table.html';
+    var ival = page.indexOf(findval);
+    var findval2 = 'index.html';
+    var ival2 = page.indexOf(findval2)
+    var title = document.getElementById('headerTitle');
+
+    if (ival != -1) {
+        document.getElementById('jqpage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'JQUERY만 사용한 페이지'
+    } else if (ival2 != -1) {
+        document.getElementById('apipage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'API 사용한 페이지'
+    }
 }

@@ -2,3 +2,42 @@
     border: 1px solid #000;
     border-collapse: collapse;
 }
+
+#ttb{
+    position: relative;
+    width: 80%;
+}
+
+#teamth, #manth, #womanth {
+    width: 7%;
+}
+
+#mth {
+    width: 5%;
+}
+
+#setdiv{
+    margin-top: 3vh;
+}
+
+.pageChange{
+    display: inline-block;
+    border: 3px solid rgb(0, 139, 253);
+    border-bottom: none;
+}
+.pageChange :hover{
+    background-color: rgb(148, 212, 255);
+    cursor: pointer;
+}
+.pageChange span{
+    display: inline-block;
+    padding: 10px;
+}
+
+#headerTitle{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    background-color: rgb(148, 212, 255);
+}

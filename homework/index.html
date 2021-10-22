@@ -6,29 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아날로그 반도체 부족현상</title>
     <!-- 사용할 js 모듈들 -->
-    <script defer src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/jquery-3.6.0.min.js"></script>
     
     <!-- 트리 -->
-    <script defer src="./node_modules/jstree/src/jstree.js"></script>
-    <script defer src="./node_modules/jstree/src/jstree.checkbox.js"></script>
+    <script src="./node_modules/jstree/src/jstree.js"></script>
+    <script src="./node_modules/jstree/src/jstree.checkbox.js"></script>
 
     <!-- 차트 -->
-    <script defer src="./node_modules/highcharts/highcharts.js"></script>
-    <script defer src="./node_modules/highcharts/modules/series-label.js"></script>
-    <script defer src="./node_modules/highcharts/modules/exporting.js"></script>
-    <script defer src="./node_modules/highcharts/modules/export-data.js"></script>
-    <script defer src="./node_modules/highcharts/modules/accessibility.js"></script>
+    <script src="./node_modules/highcharts/highcharts.js"></script>
+    <script src="./node_modules/highcharts/modules/series-label.js"></script>
+    <script src="./node_modules/highcharts/modules/exporting.js"></script>
+    <script src="./node_modules/highcharts/modules/export-data.js"></script>
+    <script src="./node_modules/highcharts/modules/accessibility.js"></script>
 
     <!-- 그리드 -->
-    <script defer src="./js/jsgrid.js"></script>
+    <script src="./js/jsgrid.js"></script>
 
     <!-- pc로 excelFile export 할 때 쓰이는 API -->
-    <script defer type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script> <!-- sheetjs -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script> <!-- sheetjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
     <!-- 작성한 스크립트 -->
-    <script defer src="./data/Data.js"></script>
-    <script defer src="./data/func.js"></script>
+    <script src="./data/Data.js"></script>
+    <script src="./data/func.js"></script>
 
     <!-- css -->
     <link rel="stylesheet" href="./node_modules/jstree/src/themes/default/style.css">
@@ -39,6 +39,22 @@
 </head>
 
 <body>
+
+    <div id="pcdiv">
+        <div class="pageChange" id="apipage">
+            <span>API 사용한 페이지</span>
+        </div>
+        <!--
+        -->
+        <div class="pageChange" id="jqpage">
+            <span>JQUERY만 사용한 페이지</span>
+        </div>
+    </div>
+    
+    <div id="headerTitle"></div>
+    <script>
+        setPage(); // menu css 동적 제어
+    </script>
 
     <h3>자동차 브랜드 분류</h3>
     <!-- tree div -->
@@ -165,7 +181,7 @@
             });
         }
         // 최초 실행.
-        setTimeout('button()',350);
+        setTimeout('button()',300);
     </script>
 
 </body>

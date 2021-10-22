@@ -10,7 +10,21 @@
     <script src="./tb.js"></script>
 </head>
 <body>
-    <div>
+    <div id="pcdiv">
+        <div class="pageChange" id="apipage">
+            <span>API 사용한 페이지</span>
+        </div><!--
+        --><div class="pageChange" id="jqpage">
+            <span>JQUERY만 사용한 페이지</span>
+        </div>
+    </div>
+    
+    <div id="headerTitle"></div>
+    <script>
+        setPage(); // menu css 동적 제어
+    </script>
+
+    <div id="checkdiv">
         <input type="checkbox" value="all" id="all">ALL
         <input type="checkbox" value="TeamA" id="teamA" onchange="cbf(this);">TeamA
         <input type="checkbox" value="TeamB" id="teamB" onchange="cbf(this);">TeamB

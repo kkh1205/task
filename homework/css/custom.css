@@ -9,7 +9,7 @@
     position: absolute;
     width: 20%;
     height: 50vh;
-    top: 50px;
+    top: 21vh;
 }
 
 #changeValue {
@@ -17,7 +17,7 @@
     width: 5vw;
     height: 5vh;
     left: 15%;
-    top: 8%;
+    top: 21.5vh;
 }
 
 #jsGrid {
@@ -38,4 +38,28 @@ h3 {
     border: 1px solid #000;
     position: absolute;
     width: 20%;
+}
+
+.pageChange {
+    display: inline-block;
+    border: 3px solid rgb(0, 139, 253);
+    border-bottom: none;
+}
+
+.pageChange :hover {
+    background-color: rgb(148, 212, 255);
+    cursor: pointer;
+}
+
+.pageChange span {
+    display: inline-block;
+    padding: 10px;
+}
+
+#headerTitle {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    background-color: rgb(148, 212, 255);
 }
