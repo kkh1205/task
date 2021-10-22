@@ -26,9 +26,11 @@
     margin-bottom: 470px;
 }
 
-#exportButton {
+#exportdiv {
     position: absolute;
-    top: 58vh;
+    top: 72vh;
+}
+#exportButton{
     left: .5vw;
     height: 5vh;
     width: 7vw;

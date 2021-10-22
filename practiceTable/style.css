@@ -5,15 +5,14 @@
 
 #ttb{
     position: relative;
-    width: 80%;
 }
 
 #teamth, #manth, #womanth {
-    width: 7%;
+    width: 5vw;
 }
 
 #mth {
-    width: 5%;
+    width: 5.5vw;
 }
 
 #setdiv{
