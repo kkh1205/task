@@ -81,7 +81,7 @@
 
         function filterApplyButton() {
             setGridData();
-            var ctsd = setChartData();
+            var chartData = setChartData();
             // ------------------- chart draw(action) ----------------------
 
             Highcharts.chart(ctx, {
@@ -101,7 +101,58 @@
                         }
                     },
                     categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                    plotLines: pline // chartOptions.js
+                    plotLines: [
+                    {
+                        /* 이벤트 발생 시 표시 할 라인입니다. */
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 3,
+                        label: 
+                        {
+                            rotation: 0,
+                            /* 라벨 회전 */
+                            y: 45,
+                            /* 라벨 위치 이동 */
+                            style: 
+                            {
+                                fontSize: '10px'
+                            },
+                            text: '코로나로 공장 정지'
+                        }
+                    },
+                    {
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 5,
+                        label: 
+                        {
+                            y: 20,
+                            style: 
+                            {
+                                fontSize: '10px'
+                            },
+                            text: '미국공장화재'
+                        }
+                    
+                    },
+                    {
+                        color: 'red',
+                        dashStyle: 'dot',
+                        width: 1,
+                        value: 6,
+                        label: 
+                        {
+                            y: 5,
+                            style:
+                            {
+                                fontSize: '10px'
+                            },
+                            text: '대만공장화재'
+                        }
+                    }
+                    ]
                 },
                 yAxis: [
                 {
@@ -180,7 +231,7 @@
                         }
                     }
                 },
-                series: ctsd
+                series: chartData
             });
         }
         // 최초 실행.

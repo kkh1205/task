@@ -220,44 +220,45 @@ function setChartData() {
         checked_ids.push(this.id);
     });
 
-    var ctseries = [];
+    // check data에 해당하는 데이터를 chartSeries에 push해준다.
+    var chartSeries = [];
     for (var i = 0; i < checked_ids.length; i++)
     {
         if (checked_ids[i] == '1Htree')
         {
-            ctseries.push(isChartH[0]);
+            chartSeries.push(isChartH[0]);
         }
         else if (checked_ids[i] == '2Ktree')
         {
-            ctseries.push(isChartK[0]);
+            chartSeries.push(isChartK[0]);
         }
         else if (checked_ids[i] == '3Ttree') 
         {
-            ctseries.push(isChartT[0]);
+            chartSeries.push(isChartT[0]);
         } 
         else if (checked_ids[i] == '4Htree1') 
         {
-            ctseries.push(isChartH1[0]);
+            chartSeries.push(isChartH1[0]);
         } 
         else if (checked_ids[i] == '5Ktree1') 
         {
-            ctseries.push(isChartK1[0]);
+            chartSeries.push(isChartK1[0]);
         } 
         else if (checked_ids[i] == '6Ttree1') 
         {
-            ctseries.push(isChartT1[0]);
+            chartSeries.push(isChartT1[0]);
         } 
         else if (checked_ids[i] == '7Mtree') 
         {
-            ctseries.push(isChartM[0]);
+            chartSeries.push(isChartM[0]);
         }
     }
 
     // data 적용 전 보여줄 순서대로 정렬.
-    ctseries = ctseries.sort(function (a, b) {
+    chartSeries = chartSeries.sort(function (a, b) {
         return a.sort < b.sort ? -1 : a.sort > b.sort ? 1 : 0;
     });
-    return ctseries;
+    return chartSeries;
 }
 // ------------ set griddata ---------------
 function setGridData() {
@@ -294,11 +295,9 @@ function setGridData() {
 
     // grid 옵션에 data를 체크된 데이터를 넣는다. autoload를 켜놔서 자동으로 업데이트 됨.
     $("#jsGrid").jsGrid("option", "data", checked_GridData);
-    console.log(checked_GridData);
 
     // excelExport 할 때 쓸 data 전역변수에 저장
     excelData = checked_GridData;
-    console.log(excelData);
 
 }
 
