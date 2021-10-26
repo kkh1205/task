@@ -39,13 +39,13 @@
 </head>
 
 <body>
-
-    <div id="pcdiv">
-        <div class="pageChange" id="apipage"
-            onclick="window.location.href = `http://localhost:8080/task/homework/index.html`">
+    <!-- 상단 메뉴 -->
+    <div>
+        <div class="pageChange" id="apiPage"
+            onclick="window.location.href = `http://localhost:8080/task/homework/index.html`"> <!-- backtick(`) -->
             <span>API 사용한 페이지</span>
         </div><!--
-        --><div class="pageChange" id="jqpage"
+        --><div class="pageChange" id="jqPage"
             onclick="window.location.href = `http://localhost:8080/task/practiceTable/table.html`">
             <span>JQUERY만 사용한 페이지</span>
         </div>
@@ -56,31 +56,32 @@
         setPage(); // menu css 동적 제어
     </script>
 
+    <!-------------- 본문 ---------------->
     <h3>자동차 브랜드 분류</h3>
     <!-- tree div -->
     <div id=tree></div>
-    <input type="button" name="change" id="changeValue" value="적용" onclick="button();">
+    <input type="button" name="change" id="changeValue" value="적용" onclick="filterApplyButton();">
 
     <!-- chart div -->
     <figure class="highcharts-figure">
         <div id="container"></div>
     </figure>
 
-    <!---------------- grid ---------------->
+    <!-- grid  div-->
     <div id="jsGrid"></div>
 
     <!-- export excel file -->
-    <div id="exportdiv">
+    <div id="exportDiv">
         <input type="button" value="excel export" id="exportButton" onclick="exportExcel();">
     </div>
 
-    <!-- button, chart script. only bodyTag. (highcharts library works in the bodyTag only.) -->
+    <!-- button, chart script (highcharts library works in the bodyTag only.) -->
     <script>
         var ctx = document.getElementById('container');
 
-        function button() {
-            setgridData();
-            var ctsd = chartsetdata();
+        function filterApplyButton() {
+            setGridData();
+            var ctsd = setChartData();
             // ------------------- chart draw(action) ----------------------
 
             Highcharts.chart(ctx, {
@@ -183,7 +184,7 @@
             });
         }
         // 최초 실행.
-        setTimeout('button()',300);
+        setTimeout('filterApplyButton()',300);
     </script>
 
 </body>

@@ -1,5 +1,4 @@
-// -------------------- tree ---------------------
-
+// draw tree function.
 $(function treeset() {
     $('#tree').jstree({
         'core': 
@@ -20,14 +19,13 @@ $(function treeset() {
     });
 });
 
-// -------------- set grid -------------
-
+// draw grid function.
 $(function () {
     var grid =
         $("#jsGrid").jsGrid({
             width: "100%",
             sorting: true,
-            autoload: true,
+            autoload: true, // data바뀌면 알아서 reload 해주는 옵션.
             headerRowRenderer: function () {
                 var $result = $("<tr>").height(0)
                     .append($("<tr>").width("100/13%"))
@@ -45,12 +43,12 @@ $(function () {
                     .append($("<tr>").width("100/13%"));
 
                 $result = $result.add($("<tr>")
-                    .append($("<th class='jsgrid-cell'>").attr("rowspan", 2).text("메이커")
-                        .height(40))
+                    .append($("<th class='jsgrid-cell'>").attr("rowspan", 2).text("메이커"))
                     .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("1분기"))
                     .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("2분기"))
                     .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("3분기"))
-                    .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("4분기")));
+                    .append($("<th class='jsgrid-cell'>").attr("colspan", 3).text("4분기"))
+                );
 
                 $result = $result.add($("<tr>")
                     .append($("<th class='jsgrid-cell'>").text("1월"))
@@ -141,7 +139,6 @@ $(function () {
 
 
 // set excel export
-
 function exportExcel() {
     // ArrayBuffer 만들어주는 함수
     function s2ab(s) {
@@ -173,16 +170,15 @@ function exportExcel() {
     wb.SheetNames.push("sheet 1");
     // wb.SheetNames.push("sheet 2"); // 시트가 여러개인 경우
 
-    // 데이터 뽑기 전역변수 excelData 사용
-
+    // grid에서 가져온 데이터. 전역변수 excelData 사용
     let checkExData = [
         ['메이커', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
     ];
     excelData.forEach(function(item) {
         checkExData.push([item.CarMaker,
-            parseInt(item.M1), parseInt(item.M2), parseInt(item.M3), parseInt(item.M4),
-            parseInt(item.M5), parseInt(item.M6), parseInt(item.M7), parseInt(item.M8),
-            parseInt(item.M9), parseInt(item.M10), parseInt(item.M11), parseInt(item.M12)
+            item.M1, item.M2, item.M3, item.M4,
+            item.M5, item.M6, item.M7, item.M8,
+            item.M9, item.M10, item.M11, item.M12
         ]);
     });
 
@@ -216,8 +212,8 @@ var excelData = {}
 excelData = isGrid;
 
 //---------- set chartdata --------------
-function chartsetdata() {
-    // checkdata save
+function setChartData() {
+    // check data save
     var checked_ids = [];
     var selectedNode = $('#tree').jstree('get_selected', true);
     $.each(selectedNode, function () {
@@ -225,30 +221,46 @@ function chartsetdata() {
     });
 
     var ctseries = [];
-    for (var i = 0; i < checked_ids.length; i++) {
-        if (checked_ids[i] == '1Htree') {
+    for (var i = 0; i < checked_ids.length; i++)
+    {
+        if (checked_ids[i] == '1Htree')
+        {
             ctseries.push(isChartH[0]);
-        } else if (checked_ids[i] == '2Ktree') {
+        }
+        else if (checked_ids[i] == '2Ktree')
+        {
             ctseries.push(isChartK[0]);
-        } else if (checked_ids[i] == '3Ttree') {
+        }
+        else if (checked_ids[i] == '3Ttree') 
+        {
             ctseries.push(isChartT[0]);
-        } else if (checked_ids[i] == '4Htree1') {
+        } 
+        else if (checked_ids[i] == '4Htree1') 
+        {
             ctseries.push(isChartH1[0]);
-        } else if (checked_ids[i] == '5Ktree1') {
+        } 
+        else if (checked_ids[i] == '5Ktree1') 
+        {
             ctseries.push(isChartK1[0]);
-        } else if (checked_ids[i] == '6Ttree1') {
+        } 
+        else if (checked_ids[i] == '6Ttree1') 
+        {
             ctseries.push(isChartT1[0]);
-        } else if (checked_ids[i] == '7Mtree') {
+        } 
+        else if (checked_ids[i] == '7Mtree') 
+        {
             ctseries.push(isChartM[0]);
         }
     }
+
+    // data 적용 전 보여줄 순서대로 정렬.
     ctseries = ctseries.sort(function (a, b) {
         return a.sort < b.sort ? -1 : a.sort > b.sort ? 1 : 0;
     });
     return ctseries;
 }
 // ------------ set griddata ---------------
-function setgridData() {
+function setGridData() {
     // 배열에 체크된 데이터만 저장
     var checked_ids = [];
     var selectedNode = $('#tree').jstree('get_selected', true);
@@ -275,6 +287,7 @@ function setgridData() {
         }
     });
 
+    // data 적용 전 보여줄 순서대로 정렬.
     checked_GridData = checked_GridData.sort(function(a,b){
         return a.sort < b.sort ? -1 : a.sort > b.sort ? 1 : 0;
     });
@@ -289,20 +302,22 @@ function setgridData() {
 
 }
 
-// ---------- menu -----------
+/* ---------- 상단 타이틀 이름 변경 -----------
+url의 pathname에 따라 타이틀 변경.
+*/
 function setPage() {
     var page = document.location.pathname;
-    var findval = 'table.html';
-    var ival = page.indexOf(findval);
-    var findval2 = 'index.html';
-    var ival2 = page.indexOf(findval2)
+    // indexOf로 각 문자열을 pathname에서 찾으면 -1 말고 다른값이 리턴된다(해당 문자를 찾은 위치)
+    var includePathnameTable = page.indexOf('table.html');
+    var includePathnameIndex = page.indexOf('index.html');
     var title = document.getElementById('headerTitle');
 
-    if (ival != -1) {
-        document.getElementById('jqpage').style.borderBottom = '7px solid rgb(198, 232, 255)';
-        title.innerHTML = 'JQUERY만 사용한 페이지'
-    } else if (ival2 != -1) {
-        document.getElementById('apipage').style.borderBottom = '7px solid rgb(198, 232, 255)';
-        title.innerHTML = 'API 사용한 페이지'
+    // url의 pathname에 따라 타이틀 변경.
+    if (includePathnameTable != -1) {
+        document.getElementById('jqPage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'JQUERY만 사용한 페이지';
+    } else if (includePathnameIndex != -1) {
+        document.getElementById('apiPage').style.borderBottom = '7px solid rgb(198, 232, 255)';
+        title.innerHTML = 'API 사용한 페이지';
     }
 }
