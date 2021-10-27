@@ -7,11 +7,11 @@ $(function treeset() {
             {
                 'icons': false /* jstree적용 시 리스트마다 생성되는 폴더 아이콘 삭제 */
             },
-            'data': isTree
+            'data': isTree // tree data는 변동이 없으니 정제된 데이터를 최초에 한번 넣어줍니다.
         },
         'checbox': 
         {
-            'keep_selected_style': false
+            'keep_selected_style': false  // seleted된 style을 유지 할 것인지에 대한 옵션. 기본값은 true.
         },
         'plugins': [
             'checkbox'
@@ -301,20 +301,20 @@ function setGridData() {
 
 }
 
-/* ---------- 상단 타이틀 이름 변경 -----------
-url의 pathname에 따라 타이틀 변경.
-*/
-function setPage() {
+/* ---------- 상단 타이틀 이름 변경 -----------*/
+function setTitle() {
     var page = document.location.pathname;
     // indexOf로 각 문자열을 pathname에서 찾으면 -1 말고 다른값이 리턴된다(해당 문자를 찾은 위치)
     var includePathnameTable = page.indexOf('table.html');
     var includePathnameIndex = page.indexOf('index.html');
     var title = document.getElementById('headerTitle');
 
-    // url의 pathname에 따라 타이틀 변경.
+    // pathname에 따라 Title 동적변경. 
+    // table.html이 존재하면
     if (includePathnameTable != -1) {
         document.getElementById('jqPage').style.borderBottom = '7px solid rgb(198, 232, 255)';
         title.innerHTML = 'JQUERY만 사용한 페이지';
+    // index.html이 존재하면    
     } else if (includePathnameIndex != -1) {
         document.getElementById('apiPage').style.borderBottom = '7px solid rgb(198, 232, 255)';
         title.innerHTML = 'API 사용한 페이지';

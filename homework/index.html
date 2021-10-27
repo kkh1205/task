@@ -51,9 +51,10 @@
         </div>
     </div>
     
+    <!-- setitle 함수로 headerTitle 동적제어 -->
     <div id="headerTitle"></div>
     <script>
-        setPage(); // menu css 동적 제어
+        setTitle(); // Title css 동적 제어
     </script>
 
     <!-------------- 본문 ---------------->
@@ -75,7 +76,7 @@
         <input type="button" value="excel export" id="exportButton" onclick="exportExcel();">
     </div>
 
-    <!-- button, chart script (highcharts library works in the bodyTag only.) -->
+    <!-- Filterbutton을 데이터를 받아 그리드, 차트가 그려짐.  -->
     <script>
         var ctx = document.getElementById('container');
 
@@ -103,7 +104,7 @@
                     categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
                     plotLines: [
                     {
-                        /* 이벤트 발생 시 표시 할 라인입니다. */
+                        /* 이벤트 발생 시기를 표시하는 라인입니다. */
                         color: 'red',
                         dashStyle: 'dot',
                         width: 1,
