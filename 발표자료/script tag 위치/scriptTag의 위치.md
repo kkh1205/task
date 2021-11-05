@@ -50,15 +50,35 @@
 
 ##### 1.DOMContentLoaded
 
+DOM 생성이 끝난 후 실행
+
+```
+document.addEventListener("DOMContentLoaded", function(){});
+```
+
 
 
 ##### 2.onload
 
-
-
-
+문서에 포함된 모든 컨텐츠 로드 후 실행.
 
 ```
+window.onload = function(){}
+```
 
+
+
+#### script tag로 외부 js파일을 불러올 때
+
+불러온 순서에 따라 순차적으로 읽어오기 때문에, 순서가 꼬이면 작동하지 않는 
+
+코드가 있을 수 있다.
+
+예시
+
+```
+<script src = "logic.js"></script> // data를 불러옴
+<script src = "data.js"></script> // data는 나중에 정의됨.
+--> 작동X
 ```
 
