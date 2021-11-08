@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tuiGridTest</title>
+    <script src="./node_modules/tui-grid/dist/tui-grid.js"></script>
+    <script src="./data.js"></script>
+    <script type="module" src="./gridSet.js"></script>
+
+    <link rel="stylesheet" href="./node_modules/tui-grid/dist/tui-grid.css">
+
+    <!-- TOASTui 꾸미는 기능이 거의 없음 CSS로 처리해야함 -->
+    <style>
+        .tui-grid-cell-header {
+            font-size: larger;
+        }
+
+        .tui-grid-cell-has-input {
+            font-size: medium;
+
+            text-align: center !important
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h3>테스트 결과</h3>
+        <div id="grid"></div>
+    </div>
+</body>
+
+</html>
