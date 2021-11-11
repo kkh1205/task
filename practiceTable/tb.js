@@ -225,9 +225,6 @@ function cret() {
         var btd = document.createElement('td');
         btd.setAttribute('id', 'btd' + i.toString());
         btd.innerHTML = sumcal(data, 'b', count);
-        var ctd = document.createElement('td');
-        ctd.setAttribute('id', 'ctd' + i.toString());
-        ctd.innerHTML = sumcal(data, 'c', count);
 
         totaltr.appendChild(atd);
         totaltr.appendChild(btd);

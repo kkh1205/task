@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComplexColumns</title>
+    <!-- 컴포넌트 css적용 -->
+    <link rel="stylesheet" href="./node_modules/tui-grid/dist/tui-grid.min.css">
+    <!-- 컴포넌트 js적용 -->
+    <script src="./node_modules/tui-grid/dist/tui-grid.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <h3 style="text-align: center;">2021 레이싱 게임 분기별 판매 현황</h3>
+        <div id="cColumn"></div>
+    </div>
+    
+    <script>
+        // 단위지정(컴포넌트 아닙니다)
+        var unit = ' milion copy';
+        function unitF(num) {
+            return num + unit;
+        }
+
+        // 임의 데이터
+        var dataSet = {
+            DrivingGame: [{
+                    'game': 'Forza Horizon 5 (xboxGamePass제외)',
+                    '1q': unitF(1300),
+                    '2q': unitF(2000),
+                    '3q': unitF(1490),
+                    '4q': unitF(800)
+                },
+                {
+                    'game': 'The Crew2',
+                    '1q': unitF(800),
+                    '2q': unitF(700),
+                    '3q': unitF(650),
+                    '4q': unitF(630)
+                },
+                {
+                    'game': 'Need for speed Heat',
+                    '1q': unitF(850),
+                    '2q': unitF(870),
+                    '3q': unitF(670),
+                    '4q': unitF(400)
+                },
+                {
+                    'game': 'Asseto Corsa',
+                    '1q': unitF(450),
+                    '2q': unitF(700),
+                    '3q': unitF(1000),
+                    '4q': unitF(1200)
+                },
+                {
+                    'game': 'Project Cars2',
+                    '1q': unitF(1100),
+                    '2q': unitF(700),
+                    '3q': unitF(630),
+                    '4q': unitF(420)
+                }
+            ]
+        }
+
+        // draw grid
+        const grid = new tui.Grid({
+            el: document.getElementById('cColumn'), // 표가 생성 될 div
+            data: dataSet.DrivingGame,
+            // 하위 컬럼.
+            columns: [{
+                    header: 'Games',
+                    name: 'game'
+                },
+                {
+                    header: '1분기',
+                    name: '1q'
+                },
+                {
+                    header: '2분기',
+                    name: '2q'
+                },
+                {
+                    header: '3분기',
+                    name: '3q'
+                },
+                {
+                    header: '4분기',
+                    name: '4q'
+                }
+            ],
+            // header.complexColumns로 복합컬럼 정의. 트리구조로 만들 수 있다.
+            header: {
+                height: 130,
+                complexColumns: [{
+                        header: '상반기',
+                        name: 'firstHalf',
+                        childNames: ['1q', '2q'] // 하위컬럼 지정.
+                    },
+                    {
+                        header: '하반기',
+                        name: 'secondHalf',
+                        childNames: ['3q', '4q']
+                    },
+                    {
+                        header: '2021',
+                        name: 'year',
+                        childNames: ['firstHalf', 'secondHalf']
+                    }
+                ]
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -11,6 +11,7 @@
   "dependencies": {
     "jquery": "^3.6.0",
     "requirejs": "^2.3.6",
+    "swiper": "^7.2.0",
     "tui-grid": "^4.19.3"
   }
 }
