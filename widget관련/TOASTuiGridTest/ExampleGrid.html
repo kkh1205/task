@@ -9,7 +9,10 @@
     <!-- swiper, Toast ui grid 적용 -->
     <link rel="stylesheet" href="./node_modules/tui-grid/dist/tui-grid.min.css">
     <link rel="stylesheet" href="./node_modules/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="./node_modules/tui-pagination/dist/tui-pagination.css">
     <script src="./node_modules/swiper/swiper-bundle.js"></script>
+    <!-- pagination이 tui-grid보다 먼저 선언되어야 한다. -->
+    <script src="./node_modules/tui-pagination/dist/tui-pagination.js"></script>
     <script src="./node_modules/tui-grid/dist/tui-grid.min.js"></script>
 
     <style>
@@ -39,7 +42,12 @@
             </div>
             <div class="swiper-slide">
                 <h3>2021 레이싱 게임 분기별 판매 현황</h3>
-                <div style="margin: 5%;" id="cColumn"></div>
+                <div style="margin: 5%;" id="cColumn">
+                <div class="btn-wrapper">
+                    <button style="margin-bottom: 1%;" id="appendBtn">데이터 추가</button>
+                    <button style="margin-bottom: 1%;" id="prependBtn">앞에 데이터 추가</button>
+                </div>
+                </div>
             </div>
             <div class="swiper-slide">
                 <h3>예제 테이블 3</h3>
@@ -184,9 +192,15 @@
         const complexColumns = new tui.Grid({
             el: document.getElementById('cColumn'), // 표가 생성 될 div
             data: dataSet.DrivingGame,
+            rowHeaders: ['rowNum'],
+            // page 넣는 옵션.
+            pageOptions: {
+                useClient: true, // 백엔드와 연동 없이 돌릴 시 적용 시켜야 하는 옵션
+                perPage: 8  // row가 한 페이지에 8까지 표시됨.
+            },
             // 하위 컬럼.
             columns: [{
-                    header: 'Games',
+                    header: 'Games(클릭 시 이동)',
                     name: 'game'
                 },
                 {
@@ -309,8 +323,49 @@
             },
         });
 
-        // ------------ 속성(attributes) Grid ------------------
+        const appendBtn = document.getElementById('appendBtn');
+        const prependBtn = document.getElementById('prependBtn');
 
+        const appendedData = {
+            game: 'game',
+            '1q': '1분기 데이터',
+            '2q': '2분기 데이터',
+            '3q': '3분기 데이터',
+            '4q': '4분기 데이터',
+            selectCell: '1',
+            checkboxCell: '1',
+            radioboxCell: '1'
+        };
+
+        appendBtn.addEventListener('click', () => {
+            complexColumns.appendRow(appendedData);
+        });
+
+        prependBtn.addEventListener('click', () => {
+            complexColumns.prependRow(appendedData);
+        });
+
+        // ######## 셀 클릭 시 링크 띄우기 #########
+        complexColumns.on('click', (ev) => {
+            // 링크 주소 모음
+            var links = [
+                'https://namu.wiki/w/%ED%8F%AC%EB%A5%B4%EC%9E%90%20%ED%98%B8%EB%9D%BC%EC%9D%B4%EC%A6%8C%205',
+                'https://namu.wiki/w/%EB%8D%94%20%ED%81%AC%EB%A3%A8%202?from=%EB%8D%94%ED%81%AC%EB%A3%A82',
+                'https://namu.wiki/w/%EB%8B%88%EB%93%9C%20%ED%8F%AC%20%EC%8A%A4%ED%94%BC%EB%93%9C:%20%ED%9E%88%ED%8A%B8?from=%EB%8B%88%EB%93%9C%ED%8F%AC%EC%8A%A4%ED%94%BC%EB%93%9C%20%ED%9E%88%ED%8A%B8',
+                'https://namu.wiki/w/%EC%95%84%EC%84%B8%ED%86%A0%20%EC%BD%94%EB%A5%B4%EC%82%AC',
+                'https://namu.wiki/w/Project%20CARS%202',
+                'https://namu.wiki/w/DiRT%205'
+            ];
+            
+            // 셀 클릭 시 몇번째 row에 column이름이 game인 셀이면 link를 띄운다.
+            for(var i =0; i<links.length; i++) {
+                if(ev.rowKey === i && ev.columnName === 'game'){
+                    window.open(links[i]);
+                }
+            }
+        });
+
+        // -------- exampleGrid3 Data
         const gridData3 = [{
                 name: 'Beautiful Lies',
                 artist: 'Birdy',
@@ -346,7 +401,7 @@
                 genre: 'Rock',
                 _attributes: {
                     checked: true, // 체크박스 체크
-                    /* // className 안먹음 이유 모름
+                    /* // background-color관련 기능 작동안함
                     classNames: {
                         // Add class name on a row
                         row: ['red']
@@ -354,7 +409,7 @@
                 }
             },
             {
-                name: '19',
+                name: 19,
                 artist: 'Adele',
                 release: '2008.01.27',
                 type: 'EP',
@@ -368,20 +423,20 @@
                 }
             },
             {
-                name: '21',
+                name: 21,
                 artist: 'rowSpan되서 안보임',
                 release: '2011.01.21',
                 type: 'Deluxe',
                 genre: 'rowSpan되서 안보임'
             },
             {
-                name: '25',
+                name: 25,
                 artist: 'rowSpan되서 안보임',
                 release: '2015.11.20',
                 type: 'EP',
                 genre: 'Pop',
                 _attributes: {
-                    /* // className 안먹음 이유모름
+                    /* // background-color관련 기능 작동안함
                     classNames: {
                         // Add class name on each columns
                         column: {
@@ -393,6 +448,7 @@
             }
         ];
 
+        // ---------- exampleGrid 3 draw -----------
         const exampleGrid3 = new tui.Grid({
             el: document.getElementById('exampleGrid3'),
             data: gridData3,
@@ -413,7 +469,12 @@
             ],
             columns: [{
                     header: 'Name',
-                    name: 'name'
+                    name: 'name',
+                    // // background-color관련 기능 작동안함
+                    // // data 타입이 sting이 아닐 시 background-color가 red로 설정됨.
+                    // validation: {
+                    //     datatype: 'string'
+                    // }
                 },
                 {
                     header: 'Artist',
@@ -430,6 +491,10 @@
                 {
                     header: 'Genre',
                     name: 'genre'
+                },
+                {
+                    header: 'linkButton',
+                    name: 'linkBt'
                 }
             ]
         });
