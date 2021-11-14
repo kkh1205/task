@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tuiGridTest</title>
+    <link rel="stylesheet" href="./node_modules/tui-grid/dist/tui-grid.css">
+    <script src="./node_modules/tui-grid/dist/tui-grid.js"></script>
+
+    <style>
+        .tui-grid-cell-header {
+            font-size: larger;
+        }
+
+        .tui-grid-cell-has-input {
+            font-size: medium;
+
+            text-align: center !important
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h3>테스트 결과</h3>
+        <div id="grid"></div>
+    </div>
+
+    <script>
+        // 임의 데이터
+        var gridData = [
+            {
+                // 데이터 생성 시 Row단위로 생성
+                tests: 'test1',
+                A: 8.2,
+                B: 5.3,
+                C: 6.5
+            },
+            {
+                tests: 'test2',
+                A: 4.2,
+                B: 3.9,
+                C: 5.3
+            },
+            {
+                tests: 'test3',
+                A: 2.2,
+                B: 1.5,
+                C: 3.2
+            },
+            {
+                tests: 'test4',
+                A: 1.2,
+                B: 2.1,
+                C: 12
+            }
+        ]
+        
+        // draw grid
+        const grid = new tui.Grid({
+            el: document.getElementById('grid'),
+            data: gridData,
+            scrollX: false,
+            scrollY: false,
+            columns: [{
+                    header: 'Test별', // display 되는 값
+                    name: 'tests' // 해당 컬럼 이름.
+                },
+                {
+                    header: 'A기체',
+                    name: 'A'
+                },
+                {
+                    header: 'B기체',
+                    name: 'B'
+                },
+                {
+                    header: 'C기체',
+                    name: 'C'
+                },
+            ]
+        });
+    </script>
+</body>
+
+</html>

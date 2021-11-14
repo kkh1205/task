@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree</title>
+    <!-- Toast ui grid 적용 -->
+    <link rel="stylesheet" href="./node_modules/tui-grid/dist/tui-grid.min.css">
+    <link rel="stylesheet" href="./node_modules/tui-pagination/dist/tui-pagination.css">
+    <!-- pagination이 tui-grid보다 먼저 선언되어야 한다. -->
+    <script src="./node_modules/tui-pagination/dist/tui-pagination.js"></script>
+    <script src="./node_modules/tui-grid/dist/tui-grid.min.js"></script>
+
+</head>
+<body>
+    <div style="margin: 4%;">
+        <h3 style="text-align: center;">지자체 인구수 & 예산(tree)</h3>
+        <div id="treeGrid"></div>
+    </div>
+
+    <script>
+        // 데이터 설정
+        const treeData = [
+            {
+                municipality: '경상남도',
+                budget: '3,000,000',
+                population: '3,500,000',
+                _attributes: {
+                    expanded: true // default: false
+                },
+                _children: [
+                    {
+                        municipality: '창원시',
+                        budget: '1,000,000',
+                        population: '1,000,000',
+                        _children: [
+                            {
+                                municipality: '성산구',
+                                budget: '500,000',
+                                population: '500,000'
+                            },
+                            {
+                                municipality: '의창구',
+                                budget: '500,000',
+                                population: '500,000'
+                            }
+                        ]
+                    },
+                    {
+                        municipality: '김해시',
+                        budget: '1,000,000',
+                        population: '800,000',
+                        _children: [
+                            {
+                                municipality: '남구',
+                                budget: '500,000',
+                                population: '500,000'
+                            },
+                            {
+                                municipality: '북구',
+                                budget: '500,000',
+                                population: '500,000'
+                            }
+                        ]
+                    },
+                    {
+                        municipality: '진주시',
+                        budget: '1,000,000',
+                        population: '500,000',
+                        _children: [
+                            {
+                                municipality: '동구',
+                                budget: '500,000',
+                                population: '500,000'
+                            },
+                            {
+                                municipality: '서구',
+                                budget: '500,000',
+                                population: '500,000'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+
+        // 그리드 생성
+        const grid = new tui.Grid({
+            el: document.getElementById('treeGrid'),
+            data: treeData,
+            treeColumnOptions: {
+                name: 'municipality', // 트리 컬럼의 이름
+                useIcon: true, // 아이콘 사용 여부
+                useCascadingCheckbox: true, // 부모자식 관계를 유지하며 체크박스 상태를 변경할 지 선택
+            },
+            header: {
+                align: 'center',
+                height: 40
+            },
+            columns: [
+                {
+                    header: '도시',
+                    name: 'municipality',
+                    align: 'center'
+                },
+                {
+                    header: '예산',
+                    name: 'budget',
+                    align: 'center'
+                },
+                {
+                    header: '인구수',
+                    name: 'population',
+                    align: 'center'
+                }
+            ]
+        });
+    </script>
+</body>
+</html>
