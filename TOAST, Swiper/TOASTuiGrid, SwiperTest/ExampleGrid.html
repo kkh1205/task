@@ -30,6 +30,12 @@
             text-align: center;
             background-color: rgba(81, 92, 230, 0.1);
         }
+        
+        #grid {
+            width: 800px;
+            margin: auto;
+            margin-top: 5%;
+        }
     </style>
 </head>
 
@@ -38,7 +44,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <h3>예제 테이블</h3>
-                <div style="margin: 5%;" id="grid"></div>
+                <div id="grid"></div>
             </div>
             <div class="swiper-slide">
                 <h3>2021 레이싱 게임 분기별 판매 현황</h3>
@@ -91,28 +97,75 @@
         const grid = new tui.Grid({
             el: document.getElementById('grid'),
             data: gridData,
+            // header 설정
+            header: {
+                // header height
+                height: 35
+            },
             // rowHeader로 번호나 체크박스 쉽게 달수있다.
             rowHeaders: ['rowNum','checkbox'],
+            // column 전체에 옵션을 먹임(우선순위가 높다)
+            columnOptions: {
+                minWidth: 120, // minWidth로 width옵션의 최소값을 지정할 수 있다.(테이블 기본값 보다 작게 설정 가능)
+            },
+            // row height를 지정.
+            //  minRowHeight를 사용하면 rowHeight를 기존 값 보다 더 작게 설정 할 수 있다.
+            minRowHeight: 10,
+            // row height를 지정.
+            rowHeight: 20,
+            // bodyHeight의 최소값은 130이다. minBodyHeight를 설정하면 최소값을 더 작게 설정 할 수 있다.
+            minBodyHeight: 100,
             columns: [{
                     header: 'Test별', // display 되는 값
-                    name: 'tests' // 해당 컬럼 이름.
+                    name: 'tests', // 해당 컬럼 이름.
+                    // renderer의 defalut 값 중 styles. css 값을 적용 시킬 수 있다.
+                    renderer: {
+                        styles: {
+                            fontWeight: 'bold',
+                            color: (props) => props.value === 'test1' ? 'red' : props.value === 'test2' ? 'blue' : props.value === 'test3' ? 'green' : props.value === 'test4' ? 'yellow' : 'black'
+                        }
+                    },
+                    // width 값을 줄 수 있다.(픽셀단위) minWidth보다 작아질 수 없다.
+                    width: '100'
                 },
                 {
                     header: 'A기체',
-                    name: 'A'
+                    name: 'A',
+                    // 최소값, 최대값을 넘으면 background color 변경
+                    validation: {
+                        min: 1.5,
+                        max: 6
+                    },
+                    // renderer의 defalut 값 중 classNames. 컬럼의 class를 정의 할 수 있다.
+                    renderer: {
+                        classNames: ['test-Value']
+                    }
                 },
                 {
                     header: 'B기체',
-                    name: 'B'
+                    name: 'B',
+                    validation: {
+                        min: 1.5,
+                        max: 6
+                    },
+                    // renderer의 defalut 값 중 classNames. 컬럼의 class를 정의 할 수 있다.
+                        renderer: {
+                        classNames: ['test-Value']
+                    }
                 },
                 {
                     header: 'C기체',
-                    name: 'C'
+                    name: 'C',
+                    validation: {
+                        min: 1.5,
+                        max: 6
+                    },
+                    // renderer의 defalut 값 중 classNames. 컬럼의 class를 정의 할 수 있다.
+                        renderer: {
+                        classNames: ['test-Value']
+                    }
                 },
-            ],
-            header: {
-                height: 50
-            }
+            ]
         });
 
 
@@ -192,6 +245,10 @@
                 useClient: true, // 백엔드와 연동 없이 돌릴 시 적용 시켜야 하는 옵션
                 perPage: 8  // row가 한 페이지에 8까지 표시됨.
             },
+
+            // 뷰포트 영역 높이 고정. 전체 행 높이가 더 큰 경우 Y축에 스크롤이 생성된다.
+            bodyHeight: 250,
+
             // 하위 컬럼.
             columns: [{
                     header: 'Games(클릭 시 이동)',
@@ -229,6 +286,10 @@
                 {
                     header: 'DLC유무',
                     name: 'selectCell',
+                    // 값을 인자로 가져와서 함수로 필터링 가능함.
+                    validation: {
+                        validatorFn: value => value !== '3'
+                    },
                     formatter: 'listItemText',
                     editor: {
                         type: 'select', // select는 적용버튼 클리어 버튼 적용 안됨.
@@ -426,7 +487,6 @@
                 name: 19,
                 artist: 'Adele',
                 release: '2008.01.27',
-                type: 'EP',
                 genre: 'Pop,R&B',
                 _attributes: {
                     rowSpan: {
@@ -448,19 +508,10 @@
                 artist: 'rowSpan되서 안보임',
                 release: '2015.11.20',
                 type: 'EP',
-                genre: 'Pop',
-                _attributes: {
-                    /* // background-color관련 기능 작동안함
-                    classNames: {
-                        // Add class name on each columns
-                        column: {
-                            type: ['blue'],
-                            genre: ['blue']
-                        }
-                    } */
-                }
+                genre: 'Pop'
             }
         ];
+        
 
         // ---------- exampleGrid 3 draw -----------
         const exampleGrid3 = new tui.Grid({
@@ -484,11 +535,10 @@
             columns: [{
                     header: 'Name',
                     name: 'name',
-                    // // background-color관련 기능 작동안함
-                    // // data 타입이 sting이 아닐 시 background-color가 red로 설정됨.
-                    // validation: {
-                    //     datatype: 'string'
-                    // }
+                    // data 타입이 sting이 아닐 시 background-color가 red로 설정됨.
+                    validation: {
+                        dataType: 'string'
+                    }
                 },
                 {
                     header: 'Artist',
@@ -496,7 +546,12 @@
                 },
                 {
                     header: 'Type',
-                    name: 'type'
+                    name: 'type',
+                    // data가 존재하지 않으면 background-color가 red로 설정됨.
+                    // 존재 할 땐 yellow로 설정됨.
+                    validation: {
+                        required: true
+                    }
                 },
                 {
                     header: 'Release',
@@ -523,8 +578,7 @@
         exampleGrid3.on('uncheck', (ev) => {
             alert(`uncheck: ${ev.rowKey}`);
         });
-
-
+        
 
         // ---------- swiper 적용 -------------
         var swiper = new Swiper('.swiper-container', {
