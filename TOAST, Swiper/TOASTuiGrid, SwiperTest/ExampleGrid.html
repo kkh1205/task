@@ -36,6 +36,9 @@
             margin: auto;
             margin-top: 5%;
         }
+        .test-Value{
+            font-size: 10px;
+        }
     </style>
 </head>
 
@@ -121,6 +124,7 @@
                     // renderer의 defalut 값 중 styles. css 값을 적용 시킬 수 있다.
                     renderer: {
                         styles: {
+                            fontSize: '10px',
                             fontWeight: 'bold',
                             color: (props) => props.value === 'test1' ? 'red' : props.value === 'test2' ? 'blue' : props.value === 'test3' ? 'green' : props.value === 'test4' ? 'yellow' : 'black'
                         }
@@ -441,50 +445,72 @@
         });
 
         // ------------ 예제3 rowSpan, 비활성화 예제 ------------
+        // linkButton 생성
+        var musicName = [
+            'Beautiful Lies',
+            'X',
+            'Moves Like Jagger',
+            'A Head Full Of Dreams',
+            '19',
+            '21',
+            '25'
+        ];
+
+        var linkBts = [];
+
+        for(var i =0; i<musicName.length; i++) {
+            var musicNameVal = musicName[i];
+            var searchValue = musicNameVal.replace(' ', '+');
+            var linkButton = `<button class="link-button"
+                onclick="location.href=`+'https://www.google.com/search?q='+searchValue+`">Link
+                Button</button>`;
+            linkBts.push(linkButton);
+        }
+        console.log(linkBts[0]);
+        
         const gridData3 = [{
-                name: 'Beautiful Lies',
+                name: musicName[0],
                 artist: 'Birdy',
                 release: '2016.03.26',
                 type: 'Deluxe',
-                genre: 'Pop'
+                genre: 'Pop',
+                linkBt:linkBts[0]
             },
             {
-                name: 'X',
+                name: musicName[1],
                 artist: 'Ed Sheeran',
                 release: '2014.06.24',
                 type: 'Deluxe',
                 genre: 'Pop',
                 _attributes: {
                     disabled: true // row 비활성화
-                }
+                },
+                linkBt:linkBts[1]
             },
             {
-                name: 'Moves Like Jagger',
+                name: musicName[2],
                 release: '2011.08.08',
                 artist: 'Maroon5',
                 type: 'Single',
                 genre: 'Pop,Rock',
                 _attributes: {
                     checkDisabled: true // checkbox 비활성화
-                }
+                },
+                linkBt:linkBts[2]
             },
             {
-                name: 'A Head Full Of Dreams',
+                name: musicName[3],
                 artist: 'Coldplay',
                 release: '2015.12.04',
                 type: 'Deluxe',
                 genre: 'Rock',
                 _attributes: {
                     checked: true, // 체크박스 체크
-                    /* // background-color관련 기능 작동안함
-                    classNames: {
-                        // Add class name on a row
-                        row: ['red']
-                    } */
-                }
+                },
+                linkBt:linkBts[3]
             },
             {
-                name: 19,
+                name: musicName[4],
                 artist: 'Adele',
                 release: '2008.01.27',
                 genre: 'Pop,R&B',
@@ -494,24 +520,26 @@
                         artist: 3,
                         genre: 2
                     }
-                }
+                },
+                linkBt:linkBts[4]
             },
             {
-                name: 21,
+                name: musicName[5],
                 artist: 'rowSpan되서 안보임',
                 release: '2011.01.21',
                 type: 'Deluxe',
-                genre: 'rowSpan되서 안보임'
+                genre: 'rowSpan되서 안보임',
+                linkBt:linkBts[5]
             },
             {
-                name: 25,
+                name: musicName[6],
                 artist: 'rowSpan되서 안보임',
                 release: '2015.11.20',
                 type: 'EP',
-                genre: 'Pop'
+                genre: 'Pop',
+                linkBt:linkBts[6]
             }
         ];
-        
 
         // ---------- exampleGrid 3 draw -----------
         const exampleGrid3 = new tui.Grid({
@@ -538,6 +566,9 @@
                     // data 타입이 sting이 아닐 시 background-color가 red로 설정됨.
                     validation: {
                         dataType: 'string'
+                    },
+                    renderer: {
+                        classNames: ['musicName'],
                     }
                 },
                 {
